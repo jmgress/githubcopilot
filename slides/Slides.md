@@ -3,7 +3,7 @@ marp: true
 theme: custom-default
 footer: 'James Gress | AI Director @ Accenture | https://jmgress.github.io/githubcopilot/'
 ---
-# Hype to Help: Demystifying AI for Everyday Impact
+# Use GitHub Copilot to Supercharge Your Coding in VS Code
 
 ![bg right:40%](img/00-jamesgress.png)
 
@@ -15,8 +15,7 @@ _Advanced Technology Center AI Lead Accenture_
 <i class="fa-brands fa-github"></i> GitHub: [jmgress](https://github.com/jmgress)  
 <i class="fa-brands fa-x-twitter"></i> X.com: [@jmgress](https://x.com/jmgress)  
 <i class="fa-brands fa-meetup"></i> [Tampa Bay Generative AI Meetup](https://www.meetup.com/tampa-bay-generative-ai-meetup/)  
-<i class="fa-brands fa-meetup"></i> [Tampa Bay DevOps Meetup](https://www.meetup.com/tampa-devops-meetup/)
-<i class="fa-brands fa-meetup"></i> [Tampa Bay Platform Engineering Meetup](https://www.meetup.com/tampabayplatformengineering/)
+
 <!-- 
 Done 100's of Prototypes
 Taken 10 applications to Production ranging from simple RAG to more complex Agentic systems
@@ -132,6 +131,26 @@ table {
 
 ---
 
+# **Start Fresh Chats**
+
+**Why Start New Chats:**
+- Avoid context confusion
+- Get focused suggestions
+- Prevent topic drift
+- Clear mental model
+
+**When to Start New:**
+- Switching files/projects
+- Different programming language
+- New feature vs. bug fix
+- Code review vs. implementation
+
+**How:** Click "New Chat" or `Cmd/Ctrl + Shift + Alt + L`
+
+<!-- Demo: Show context pollution vs. fresh chat results -->
+
+---
+
 # **Ask Mode - Copilot Chat**
 
 **Access:**
@@ -164,6 +183,24 @@ table {
 
 ---
 
+# **Built-in @ Agents**
+
+**Available Agents:**
+- `@workspace` - Entire codebase context
+- `@vscode` - VS Code specific questions
+- `@terminal` - Command line operations
+- `@github` - GitHub-related tasks
+
+**Examples:**
+- "@workspace find all TODO comments"
+- "@vscode how to configure extensions"
+- "@terminal run the build script"
+- "@github create a pull request template"
+
+<!-- Demo: Show different agents and their capabilities -->
+
+---
+
 # **Agent Mode - Multi-File Tasks**
 
 **Access:**
@@ -177,28 +214,6 @@ table {
 - "@workspace add documentation"
 
 <!-- Demo: Show @workspace for complex multi-file operations -->
-
----
-
-# **Custom Instructions**
-
-**Setup:**
-- VS Code Settings → GitHub Copilot
-- Project-specific `.vscode/settings.json`
-
-**Examples:**
-```json
-{
-  "github.copilot.chat.commitMessageGeneration.instructions": [
-    {"text": "Use conventional commit format"}
-  ],
-  "github.copilot.chat.codeGeneration.instructions": [
-    {"text": "Always add TypeScript types"}
-  ]
-}
-```
-
-<!-- Demo: Show settings configuration and behavior changes -->
 
 ---
 
@@ -239,6 +254,28 @@ table {
 - Command Palette → "Preferences: Open User Settings (JSON)"
 
 <!-- Explain difference: User = personal, Project = team-wide -->
+
+---
+
+# **Custom Instructions**
+
+**Setup:**
+- VS Code Settings → GitHub Copilot
+- Project-specific `.vscode/settings.json`
+
+**Examples:**
+```json
+{
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {"text": "Use conventional commit format"}
+  ],
+  "github.copilot.chat.codeGeneration.instructions": [
+    {"text": "Always add TypeScript types"}
+  ]
+}
+```
+
+<!-- Demo: Show settings configuration and behavior changes -->
 
 ---
 
@@ -308,44 +345,6 @@ Always provide specific suggestions with examples.
 **Usage:** `@code-reviewer` in Copilot Chat
 
 <!-- Demo: Create custom mode and use @ syntax -->
-
----
-
-# **Built-in @ Agents**
-
-**Available Agents:**
-- `@workspace` - Entire codebase context
-- `@vscode` - VS Code specific questions
-- `@terminal` - Command line operations
-- `@github` - GitHub-related tasks
-
-**Examples:**
-- "@workspace find all TODO comments"
-- "@vscode how to configure extensions"
-- "@terminal run the build script"
-- "@github create a pull request template"
-
-<!-- Demo: Show different agents and their capabilities -->
-
----
-
-# **Start Fresh Chats**
-
-**Why Start New Chats:**
-- Avoid context confusion
-- Get focused suggestions
-- Prevent topic drift
-- Clear mental model
-
-**When to Start New:**
-- Switching files/projects
-- Different programming language
-- New feature vs. bug fix
-- Code review vs. implementation
-
-**How:** Click "New Chat" or `Cmd/Ctrl + Shift + Alt + L`
-
-<!-- Demo: Show context pollution vs. fresh chat results -->
 
 ---
 
