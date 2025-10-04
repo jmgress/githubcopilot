@@ -164,6 +164,22 @@ table {
 
 ---
 
+# **Agent Mode - Multi-File Tasks**
+
+**Access:**
+- Type `@workspace` in chat
+- Use agent commands like `@terminal`
+
+**Examples:**
+- "@workspace create a new component"
+- "@terminal run the tests"
+- "@workspace refactor this feature"
+- "@workspace add documentation"
+
+<!-- Demo: Show @workspace for complex multi-file operations -->
+
+---
+
 # **What are Sparkles?** 
 
 <!-- Interactive question slide to engage the audience about GitHub Copilot's sparkle indicators -->
