@@ -405,5 +405,105 @@ This configuration ensures Copilot generates commit messages focused on content 
 
 <!-- Demo: Show Copilot accessing live GitHub/Jira data -->
 
+---
+
+# **Enhancing Copilot with Context**
+
+**Three Ways to Enhance Your Interactions:**
+
+1. **Add Context (#)** - Include files, selections, terminal output
+2. **Use Extensions (@)** - Leverage installed VS Code extensions  
+3. **Run Commands (/)** - Execute built-in Copilot commands
+
+**Syntax Summary:**
+- `#` for context
+- `@` for extensions  
+- `/` for commands
+
+<!-- Introduction to the three enhancement methods -->
+
+---
+
+# **Adding Context (#)**
+
+**Include Specific Context:**
+- `#file:README.md` - Include specific file
+- `#file:src/utils.js` - Reference any project file
+- `#selection` - Current code selection
+- `#terminalLastCommand` - Last terminal output
+- `#codebase` - Entire project context
+
+**Benefits:**
+- More accurate suggestions
+- Relevant code examples
+- Better understanding of project structure
+
+<!-- Demo: Show different # context options -->
+
+---
+
+# **Using Extensions (@)**
+
+**Access VS Code Extensions:**
+- Install Copilot-compatible extensions
+- Access via `@extension-name` syntax
+- Extensions appear in autocomplete
+
+**Popular Examples:**
+- `@prettier` - Code formatting
+- `@eslint` - Linting and fixes
+- `@git` - Git operations
+- `@npm` - Package management
+
+**Setup:** Extensions must support Copilot integration
+
+<!-- Demo: Show @ syntax with installed extensions -->
+
+---
+
+# **Running Commands (/)**
+
+**Built-in Copilot Commands:**
+- `/explain` - Explain selected code
+- `/fix` - Fix issues in code
+- `/tests` - Generate test cases
+- `/doc` - Generate documentation
+- `/optimize` - Improve performance
+- `/new` - Create new files/features
+
+**Usage:** Type `/` in chat to see all available commands
+
+<!-- Demo: Show / commands and their outputs -->
+
+---
+
+# **Combining Context, Extensions & Commands**
+
+**Powerful Combinations:**
+
+```
+@prettier /fix #file:src/components/Button.js
+```
+*Fix and format a specific file*
+
+```
+/tests #selection @jest
+```
+*Generate tests for selected code using Jest*
+
+```
+/explain #codebase @typescript
+```
+*Explain entire project with TypeScript context*
+
+```
+/doc #file:README.md #terminalLastCommand
+```
+*Generate docs using README and terminal output*
+
+<!-- Demo: Show complex multi-part requests -->
+
+---
+
 
 
