@@ -180,6 +180,68 @@ table {
 
 ---
 
+# **Custom Instructions**
+
+**Setup:**
+- VS Code Settings → GitHub Copilot
+- Project-specific `.vscode/settings.json`
+
+**Examples:**
+```json
+{
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {"text": "Use conventional commit format"}
+  ],
+  "github.copilot.chat.codeGeneration.instructions": [
+    {"text": "Always add TypeScript types"}
+  ]
+}
+```
+
+<!-- Demo: Show settings configuration and behavior changes -->
+
+---
+
+# **Copilot Instructions File**
+
+**Create:** `.github/copilot-instructions.md`
+
+**Example Content:**
+```markdown
+- All functions must include JSDoc comments
+- Use TypeScript for new files
+- Follow company naming conventions
+- Always add error handling
+- Write unit tests for new functions
+```
+
+**Benefits:**
+- Team-wide consistency
+- Project-specific guidance
+- Version controlled instructions
+
+<!-- Demo: Create file and show how it affects suggestions -->
+
+---
+
+# **Settings Locations**
+
+**Personal (User Settings):**
+- macOS: `~/Library/Application Support/Code/User/settings.json`
+- Windows: `%APPDATA%\Code\User\settings.json`
+- Linux: `~/.config/Code/User/settings.json`
+
+**Project (Team Settings):**
+- `.vscode/settings.json`
+
+**Access via VS Code:**
+- `Cmd/Ctrl + ,` → Open Settings (JSON) icon
+- Command Palette → "Preferences: Open User Settings (JSON)"
+
+<!-- Explain difference: User = personal, Project = team-wide -->
+
+---
+
 # **What are Sparkles?** 
 
 <!-- Interactive question slide to engage the audience about GitHub Copilot's sparkle indicators -->
