@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: custom-default
-footer: 'James Gress | AI Director @ Accenture | https://jmgress.github.io/usegenai/'
+footer: 'James Gress | AI Director @ Accenture | https://jmgress.github.io/githubcopilot/'
 ---
 # Hype to Help: Demystifying AI for Everyday Impact
 
