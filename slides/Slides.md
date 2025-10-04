@@ -92,6 +92,78 @@ Industry CEO statements from 2025 events and interviews listed above.
 
 ---
 
+# **Ghost Text & Code Completion**
+
+## **What You'll See**
+
+![Ghost Text Example](img/ghost-text-example.png)
+
+**Ghost Text**: Gray suggestions that appear as you type  
+**Tab**: Accept the suggestion  
+**Escape**: Dismiss the suggestion
+
+<!-- 
+Demo tips:
+- Show live coding with ghost text appearing
+- Demonstrate accepting/rejecting suggestions
+- Show how context influences suggestions
+-->
+
+---
+
+# **Keyboard Shortcuts**
+
+<style scoped>
+table { 
+  font-size: 0.75em;
+}
+</style>
+
+| Action | macOS | Windows/Linux |
+|--------|-------|---------------|
+| Accept suggestion | `Tab` | `Tab` |
+| Dismiss suggestion | `Esc` | `Esc` |
+| Next suggestion | `Option + ]` | `Alt + ]` |
+| Previous suggestion | `Option + [` | `Alt + [` |
+| Trigger suggestion | `Option + \` | `Alt + \` |
+| Open Copilot panel | `Ctrl + Return` | `Ctrl + Enter` |
+
+<!-- Reference these shortcuts during live demos -->
+
+---
+
+# **Ask Mode - Copilot Chat**
+
+**Access:**
+- Chat Panel: `Cmd/Ctrl + Shift + I`
+- Inline Chat: `Cmd/Ctrl + I`
+
+**Examples:**
+- Explain this code
+- Generate unit tests
+- How do I run this code?
+- What are the options for X?
+
+<!-- Show both chat panel and inline chat demos -->
+
+---
+
+# **Edit Mode - Direct Code Changes**
+
+**Access:**
+- Select code + `Cmd/Ctrl + I`
+- Type `/edit` in chat or select edit option
+
+**Examples:**
+- "Add error handling"
+- "Convert to async/await"
+- "Add TypeScript types"
+- "Refactor this function"
+
+<!-- Demo: Select code, use Cmd+I, show direct edits -->
+
+---
+
 # **What are Sparkles?** 
 
 <!-- Interactive question slide to engage the audience about GitHub Copilot's sparkle indicators -->

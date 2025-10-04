@@ -12,3 +12,4 @@
 - Custom themes or assets should be stored in appropriate subdirectories under `slides`.
 - Follow Marp best practices for layout and styling.
 - Ensure compatibility with Marp CLI for PDF and presentation generation.
+- When asking for a slide, the content should fit within a the slide when displayed.
