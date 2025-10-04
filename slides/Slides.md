@@ -79,6 +79,23 @@ Industry CEO statements from 2025 events and interviews listed above.
 
 ---
 
+# **Time for Live Demo! 🚀**
+
+## **Switching to Hands-On Experience**
+
+**What's Next:**
+- Live demonstrations, what could go wrong? :)
+- Real-world examples in VS Code
+
+**Remaining Slides:**
+- Reference material for you to review later
+
+
+<!-- Transition point: Switch to live VS Code demo -->
+
+---
+
+
 # **Setting Up GitHub Copilot in VS Code**
 
 ## **Quick Setup**
@@ -502,6 +519,33 @@ This configuration ensures Copilot generates commit messages focused on content 
 *Generate docs using README and terminal output*
 
 <!-- Demo: Show complex multi-part requests -->
+
+---
+
+# **GitHub Copilot CLI**
+
+**Installation:**
+```bash
+npm install -g copilot
+```
+
+**Usage:**
+- copilot
+
+**Examples:**
+```bash
+gh copilot suggest "find all large files"
+gh copilot explain "tar -czf backup.tar.gz --exclude=node_modules ."
+```
+
+**Benefits:** AI-powered terminal assistance
+
+<!-- Demo: Show CLI suggestions and explanations 
+https://www.youtube.com/watch?v=VkOibxsQ1oU -->
+
+---
+
+
 
 ---
 
