@@ -1,0 +1,7 @@
+{
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+        {
+            "text": "Changes in the Slides.md it is important to describe the changes in the content and not the technical changes that were done."
+        }
+    ]
+}
