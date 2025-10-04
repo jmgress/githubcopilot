@@ -242,6 +242,113 @@ table {
 
 ---
 
+# **Copilot Prompt Files**
+
+**Create:** `.github/copilot/prompts/[name].md`
+
+**Example:** `.github/copilot/prompts/test-generator.md`
+```markdown
+# Test Generator Prompt
+
+Generate comprehensive unit tests for the selected function including:
+- Happy path scenarios
+- Edge cases and error conditions
+- Mock external dependencies
+- Use Jest testing framework
+```
+
+**Usage:** Type `#test-generator` in Copilot Chat
+
+<!-- Demo: Create prompt file and use with # syntax -->
+
+---
+
+# **Instructions.md File**
+
+**Create:** `instructions.md` (project root)
+
+**Example Content:**
+```markdown
+# Project Instructions
+
+## Code Style
+- Use camelCase for variables and functions
+- Add TypeScript types for all parameters
+- Include JSDoc comments for public functions
+
+## Architecture
+- Follow MVC pattern
+- Keep components under 200 lines
+- Use dependency injection for services
+```
+
+**Auto-Discovery:** Copilot automatically reads this file
+
+<!-- Demo: Create instructions.md and show automatic context -->
+
+---
+
+# **Custom Chat Mode**
+
+**Create:** `.github/copilot/chat-modes/[name].md`
+
+**Example:** `.github/copilot/chat-modes/code-reviewer.md`
+```markdown
+# Code Reviewer Mode
+
+You are an expert code reviewer. Focus on:
+- Security vulnerabilities
+- Performance optimizations
+- Code maintainability
+- Best practices adherence
+
+Always provide specific suggestions with examples.
+```
+
+**Usage:** `@code-reviewer` in Copilot Chat
+
+<!-- Demo: Create custom mode and use @ syntax -->
+
+---
+
+# **Built-in @ Agents**
+
+**Available Agents:**
+- `@workspace` - Entire codebase context
+- `@vscode` - VS Code specific questions
+- `@terminal` - Command line operations
+- `@github` - GitHub-related tasks
+
+**Examples:**
+- "@workspace find all TODO comments"
+- "@vscode how to configure extensions"
+- "@terminal run the build script"
+- "@github create a pull request template"
+
+<!-- Demo: Show different agents and their capabilities -->
+
+---
+
+# **Start Fresh Chats**
+
+**Why Start New Chats:**
+- Avoid context confusion
+- Get focused suggestions
+- Prevent topic drift
+- Clear mental model
+
+**When to Start New:**
+- Switching files/projects
+- Different programming language
+- New feature vs. bug fix
+- Code review vs. implementation
+
+**How:** Click "New Chat" or `Cmd/Ctrl + Shift + Alt + L`
+
+<!-- Demo: Show context pollution vs. fresh chat results -->
+
+---
+
 # **What are Sparkles?** 
 
 <!-- Interactive question slide to engage the audience about GitHub Copilot's sparkle indicators -->
@@ -280,6 +387,24 @@ Benefits:
 
 This configuration ensures Copilot generates commit messages focused on content changes rather than technical implementation details
 -->
+
+---
+
+# **MCP Servers - External Integrations**
+
+**Model Context Protocol (MCP):**
+- Connect Copilot to external services
+- Real-time data access during conversations
+
+**Popular Integrations:**
+- **GitHub**: Issues, PRs, repository data
+- **Jira**: Tickets, project management
+- **Slack**: Team communication
+- **Databases**: Query and schema information
+
+**Setup:** Install MCP extensions from marketplace
+
+<!-- Demo: Show Copilot accessing live GitHub/Jira data -->
 
 
 
