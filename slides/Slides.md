@@ -78,3 +78,58 @@ Summary Sources:
 Industry CEO statements from 2025 events and interviews listed above.
 -->
 
+---
+
+# **Setting Up GitHub Copilot in VS Code**
+
+## **Quick Setup**
+
+1. **Install Extension**: Search "GitHub Copilot" in Extensions
+2. **Sign In**: Command Palette → `GitHub Copilot: Sign In`
+3. **Start Coding**: Open any file and begin typing
+
+<!-- Requires active GitHub Copilot subscription -->
+
+---
+
+# **What are Sparkles?** 
+
+<!-- Interactive question slide to engage the audience about GitHub Copilot's sparkle indicators -->
+---
+
+# **Configuring GitHub Copilot in VS Code**
+
+## **VS Code Settings Configuration**
+
+
+
+```json
+{
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+        {
+            "text": "Changes in the Slides.md it is important to describe the changes in the content and not the technical changes that were done."
+        }
+    ]
+}
+```
+
+## **VS Code Settings Location**
+
+```yaml
+your-project/
+├── .vscode/
+│   └── settings.json
+└── other-files...
+```
+
+<!-- 
+Benefits:
+- Project-specific AI behavior tailored to your workflow
+- Team consistency through shared configuration
+- Context-aware assistance for different file types
+
+This configuration ensures Copilot generates commit messages focused on content changes rather than technical implementation details
+-->
+
+
+
