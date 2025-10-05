@@ -425,24 +425,6 @@ This configuration ensures Copilot generates commit messages focused on content 
 
 ---
 
-# **MCP Servers - External Integrations**
-
-**Model Context Protocol (MCP):**
-- Connect Copilot to external services
-- Real-time data access during conversations
-
-**Popular Integrations:**
-- **GitHub**: Issues, PRs, repository data
-- **Jira**: Tickets, project management
-- **Slack**: Team communication
-- **Databases**: Query and schema information
-
-**Setup:** Install MCP extensions from marketplace
-
-<!-- Demo: Show Copilot accessing live GitHub/Jira data -->
-
----
-
 # **Enhancing Copilot with Context**
 
 **Three Ways to Enhance Your Interactions:**
@@ -538,6 +520,24 @@ This configuration ensures Copilot generates commit messages focused on content 
 *Generate docs using README and terminal output*
 
 <!-- Demo: Show complex multi-part requests -->
+
+---
+
+# **MCP Servers - External Integrations**
+
+**Model Context Protocol (MCP):**
+- Connect Copilot to external services
+- Real-time data access during conversations
+
+**Popular Integrations:**
+- **GitHub**: Issues, PRs, repository data
+- **Jira**: Tickets, project management
+- **Slack**: Team communication
+- **Databases**: Query and schema information
+
+**Setup:** Install MCP extensions from marketplace
+
+<!-- Demo: Show Copilot accessing live GitHub/Jira data -->
 
 ---
 
