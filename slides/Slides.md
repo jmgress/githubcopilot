@@ -176,7 +176,7 @@ table {
 - Explain this code
 - Generate unit tests
 - How do I run this code?
-- What are the options for X?
+- What are the options for pip install?
 
 <!-- Show both chat panel and inline chat demos -->
 
@@ -204,13 +204,12 @@ table {
 - `@workspace` - Entire codebase context
 - `@vscode` - VS Code specific questions
 - `@terminal` - Command line operations
-- `@github` - GitHub-related tasks
+- `@github` - Specifically focused on GitHub platform features and workflows
 
 **Examples:**
 - "@workspace find all TODO comments"
 - "@vscode how to configure extensions"
 - "@terminal run the build script"
-- "@github create a pull request template"
 
 <!-- Demo: Show different agents and their capabilities -->
 
@@ -229,6 +228,28 @@ table {
 - "@workspace add documentation"
 
 <!-- Demo: Show @workspace for complex multi-file operations -->
+
+---
+
+# **Ask vs Edit vs Agent Modes**
+
+<style scoped>
+table { 
+  font-size: 0.7em;
+}
+</style>
+
+| Feature | Ask Mode | Edit Mode | Agent Mode |
+|---------|----------|-----------|------------|
+| **Purpose** | Get information | Modify code directly | Multi-file operations |
+| **Access** | `Cmd/Ctrl + Shift + I` | `Cmd/Ctrl + I` | `@workspace` |
+| **Scope** | Questions & explanations | Single code selection | Entire project |
+| **Output** | Text responses | Code changes | Complex workflows |
+| **Best For** | Learning & debugging | Quick fixes | Architecture changes |
+
+**Choose the right mode for your task!**
+
+<!-- Demo: Show all three modes for the same problem -->
 
 ---
 
@@ -269,28 +290,6 @@ table {
 - Command Palette → "Preferences: Open User Settings (JSON)"
 
 <!-- Explain difference: User = personal, Project = team-wide -->
-
----
-
-# **Custom Instructions**
-
-**Setup:**
-- VS Code Settings → GitHub Copilot
-- Project-specific `.vscode/settings.json`
-
-**Examples:**
-```json
-{
-  "github.copilot.chat.commitMessageGeneration.instructions": [
-    {"text": "Use conventional commit format"}
-  ],
-  "github.copilot.chat.codeGeneration.instructions": [
-    {"text": "Always add TypeScript types"}
-  ]
-}
-```
-
-<!-- Demo: Show settings configuration and behavior changes -->
 
 ---
 
@@ -366,6 +365,28 @@ Always provide specific suggestions with examples.
 # **What are Sparkles?** 
 
 <!-- Interactive question slide to engage the audience about GitHub Copilot's sparkle indicators -->
+
+---
+
+# **Custom Instructions**
+
+**Setup:**
+- VS Code Settings → GitHub Copilot
+- Project-specific `.vscode/settings.json`
+
+**Examples:**
+```json
+{
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {"text": "Use conventional commit format"}
+  ],
+  "github.copilot.chat.codeGeneration.instructions": [
+    {"text": "Always add TypeScript types"}
+  ]
+}
+```
+
+<!-- Demo: Show settings configuration and behavior changes -->
 ---
 
 # **Configuring GitHub Copilot in VS Code**
