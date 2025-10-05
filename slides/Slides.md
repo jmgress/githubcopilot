@@ -88,7 +88,7 @@ Industry CEO statements from 2025 events and interviews listed above.
 - Real-world examples in VS Code
 
 **Remaining Slides:**
-- Reference material for you to review later
+- Reference material on the demo sequence and for you to reference later
 
 
 <!-- Transition point: Switch to live VS Code demo -->
@@ -151,10 +151,8 @@ table {
 # **Start Fresh Chats**
 
 **Why Start New Chats:**
-- Avoid context confusion
+- Avoid context confusion and prevent topic drift
 - Get focused suggestions
-- Prevent topic drift
-- Clear mental model
 
 **When to Start New:**
 - Switching files/projects
@@ -532,8 +530,9 @@ npm install -g copilot
 **Usage:**
 - copilot
 
-
 **Benefits:** AI-powered terminal assistance
+
+**⚠️ Note:** Some organizations may block CLI installation due to security policies
 
 <!-- Demo: Show CLI suggestions and explanations 
 https://www.youtube.com/watch?v=VkOibxsQ1oU -->
