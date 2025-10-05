@@ -532,11 +532,6 @@ npm install -g copilot
 **Usage:**
 - copilot
 
-**Examples:**
-```bash
-gh copilot suggest "find all large files"
-gh copilot explain "tar -czf backup.tar.gz --exclude=node_modules ."
-```
 
 **Benefits:** AI-powered terminal assistance
 
@@ -545,9 +540,25 @@ https://www.youtube.com/watch?v=VkOibxsQ1oU -->
 
 ---
 
+# **Spec Kit - Next-Level Development**
 
+**What is Spec Kit?**
+- AI-powered specification generation
+- Transform natural language into detailed specs
+- Accelerate project planning and development
+
+**Key Features:**
+- Generate technical specifications from descriptions
+- Create user stories and acceptance criteria
+- Build API documentation automatically
+- Integration with GitHub workflows
+
+**Learn More:** 
+🎥 [YouTube Demo](https://www.youtube.com/watch?v=a9eR1xsfvHg)
+
+<!-- Demo: Show Spec Kit in action for project planning -->
 
 ---
-
+# **Thank You!**
 
 
