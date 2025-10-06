@@ -108,7 +108,9 @@ Industry CEO statements from 2025 events and interviews listed above.
 
 ---
 
-# **What is Ghost Text? 👻**
+# **Pop Quiz! 🤔**
+# 
+**What is Ghost Text? 👻**
 
 <!-- Let audience guess before showing the example -->
 
@@ -410,6 +412,9 @@ Always provide specific suggestions with examples.
 <!-- Demo: Create custom mode and use @ syntax -->
 
 ---
+
+# **Another Pop Quiz! 🤔**
+
 
 # **What are Sparkles? ✨**
 
