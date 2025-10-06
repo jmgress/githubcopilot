@@ -108,6 +108,12 @@ Industry CEO statements from 2025 events and interviews listed above.
 
 ---
 
+# **What is Ghost Text? 👻**
+
+<!-- Let audience guess before showing the example -->
+
+---
+
 # **Ghost Text & Code Completion**
 
 ## **What You'll See**
@@ -391,11 +397,6 @@ Always provide specific suggestions with examples.
 
 # **What are Sparkles? ✨**
 
-## **Interactive Question for the Audience**
-
-**Have you noticed sparkles in VS Code?**
-
-**What do you think they mean?**
 
 <!-- Let audience guess before revealing the answer -->
 
