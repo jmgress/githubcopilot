@@ -215,6 +215,22 @@ table {
 
 ---
 
+# **Copilot Chat Actions**
+
+**After Getting a Response, You Can:**
+
+- **📋 Copy** - Copy response to clipboard
+- **💾 Insert at Cursor** - Add code at current cursor position
+- **📝 Insert in New File** - Create new file with the response
+- **💻 Insert in Terminal** - Run command in integrated terminal
+- **🔄 Apply in Editor** - Replace/modify existing code
+
+**Pro Tip:** Hover over code blocks in chat responses to see action buttons
+
+<!-- Demo: Show the action buttons that appear with chat responses -->
+
+---
+
 # **Edit Mode - Direct Code Changes**
 
 **Access:**
@@ -544,29 +560,22 @@ This configuration ensures Copilot generates commit messages focused on content 
 
 # **Combining Context, Extensions & Commands**
 
-**Powerful Combinations:**
+**Fix issues in a specific file:**
+```
+/fix #file:src/components/Button.js
+```
 
+**Generate tests for selected code:**
 ```
-@prettier /fix #file:src/components/Button.js
+/tests #selection
 ```
-*Fix and format a specific file*
 
+**Explain codebase with workspace context:**
 ```
-/tests #selection @jest
+@workspace /explain #codebase
 ```
-*Generate tests for selected code using Jest*
 
-```
-/explain #codebase @typescript
-```
-*Explain entire project with TypeScript context*
-
-```
-/doc #file:README.md #terminalLastCommand
-```
-*Generate docs using README and terminal output*
-
-<!-- Demo: Show complex multi-part requests -->
+<!-- Demo: Show complex multi-part requests that actually work -->
 
 ---
 
@@ -584,7 +593,8 @@ This configuration ensures Copilot generates commit messages focused on content 
 
 **Setup:** Install MCP extensions from marketplace
 
-<!-- Demo: Show Copilot accessing live GitHub/Jira data -->
+<!-- Demo: Show Copilot accessing live GitHub/Jira data 
+https://github.com/microsoft/mcp-for-beginners -->
 
 ---
 
