@@ -1,6 +1,7 @@
 ---
 marp: true
 theme: custom-default
+paginate: true
 footer: 'James Gress | AI Director @ Accenture | https://jmgress.github.io/githubcopilot/'
 ---
 # Use GitHub Copilot to Supercharge Your Coding in VS Code

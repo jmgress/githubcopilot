@@ -26,5 +26,13 @@ svg[id^="mermaid-"] {
   max-width: 960px; 
   max-height: 600px; 
 }
+section::after {
+  content: attr(data-marpit-pagination) ' / ' attr(data-marpit-pagination-total);
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  font-size: 0.8em;
+  color: #666;
+}
 
 @import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css'
