@@ -148,6 +148,33 @@ table {
 
 ---
 
+# **Another Pop Quiz! 🤔**
+
+## **Do you know what these are?**
+
+- **Context Creep** 🌊
+- **Context Confusion** 😵‍💫
+
+<!-- Interactive question to engage audience about AI chat problems -->
+
+---
+
+# **Context Creep & Context Confusion**
+
+## **Context Creep**
+- Conversations that gradually drift off-topic
+- Accumulating irrelevant information over time
+- AI gets "distracted" by previous unrelated discussions
+
+## **Context Confusion** 
+- AI mixes up different topics/projects in same chat
+- Wrong assumptions based on earlier context
+- Reduced accuracy and relevance of suggestions
+
+<!-- Explain the problems before showing the solution -->
+
+---
+
 # **Start Fresh Chats**
 
 **Why Start New Chats:**
