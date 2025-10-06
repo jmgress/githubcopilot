@@ -385,7 +385,6 @@ Generate comprehensive unit tests for the selected function including:
 - Use dependency injection for services
 ```
 
-**Auto-Discovery:** Copilot automatically reads this file
 
 <!-- Demo: Create instructions.md and show automatic context -->
 
@@ -417,7 +416,7 @@ Always provide specific suggestions with examples.
 # **Another Pop Quiz! 🤔**
 
 
-# **What are Sparkles? ✨**
+# **What are Sparkles?**
 
 
 <!-- Let audience guess before revealing the answer -->
