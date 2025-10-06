@@ -630,10 +630,11 @@ https://www.youtube.com/watch?v=VkOibxsQ1oU -->
 - Build API documentation automatically
 - Integration with GitHub workflows
 
+<!-- 
 **Learn More:** 
 🎥 [YouTube Demo](https://www.youtube.com/watch?v=a9eR1xsfvHg)
 
-<!-- Demo: Show Spec Kit in action for project planning -->
+Demo: Show Spec Kit in action for project planning -->
 
 ---
 # **Thank You!**
