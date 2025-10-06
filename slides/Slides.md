@@ -80,6 +80,89 @@ Industry CEO statements from 2025 events and interviews listed above.
 
 ---
 
+# **Understanding Copilot's Strengths & Weaknesses**
+
+<style scoped>
+.columns {
+  display: flex;
+  gap: 2rem;
+}
+.column {
+  flex: 1;
+}
+</style>
+
+<div class="columns">
+
+<div class="column">
+
+## **Copilot Does Best ✅**
+- Writing tests and repetitive code
+- Debugging and correcting syntax
+- Explaining and commenting code
+- Generating regular expressions
+
+</div>
+
+<div class="column">
+
+## **Copilot Is Not Designed For ❌**
+- Responding to non-coding/technology prompts
+- Replacing your expertise and skills
+
+</div>
+
+</div>
+
+## **Remember: You Are In Charge!**
+Copilot is a powerful tool at your service, not a replacement for your knowledge.
+
+<!-- Emphasize that developers remain in control and responsible for code quality -->
+
+---
+
+# **Create Thoughtful Prompts**
+
+**Prompt Engineering Best Practices:**
+
+<style scoped>
+.columns {
+  display: flex;
+  gap: 2rem;
+}
+.column {
+  flex: 1;
+}
+</style>
+
+<div class="columns">
+
+<div class="column">
+
+## **Structure Your Requests**
+- **Break down complex tasks** into smaller steps
+- **Be specific** about your requirements
+- **Provide examples** of inputs/outputs
+
+</div>
+
+<div class="column">
+
+## **Good Practices**
+- **Follow coding standards** in your prompts
+- **Include context** about your project
+- **Specify frameworks/libraries** you're using
+
+</div>
+
+</div>
+
+**Remember:** Clear prompts = better results from Copilot!
+
+<!-- Demo: Show difference between vague vs. specific prompts -->
+
+---
+
 # **Time for Live Demo! 🚀**
 
 ## **Switching to Hands-On Experience**
@@ -90,7 +173,6 @@ Industry CEO statements from 2025 events and interviews listed above.
 
 **Remaining Slides:**
 - Reference material on the demo sequence and for you to reference later
-
 
 <!-- Transition point: Switch to live VS Code demo -->
 
@@ -601,64 +683,6 @@ This configuration ensures Copilot generates commit messages focused on content 
 
 ---
 
-# **MCP Servers - External Integrations**
-
-**Model Context Protocol (MCP):**
-- Connect Copilot to external services
-- Real-time data access during conversations
-
-**Popular Integrations:**
-- **GitHub**: Issues, PRs, repository data
-- **Jira**: Tickets, project management
-- **Slack**: Team communication
-- **Databases**: Query and schema information
-
-**Setup:** Install MCP extensions from marketplace
-
-<!-- Demo: Show Copilot accessing live GitHub/Jira data 
-https://github.com/microsoft/mcp-for-beginners -->
-
----
-
-# **GitHub Copilot CLI**
-
-**Installation:**
-```bash
-npm install -g copilot
-```
-
-**Usage:**
-- copilot
-
-**Benefits:** AI-powered terminal assistance
-
-**⚠️ Note:** Some organizations may block CLI installation due to security policies
-
-<!-- Demo: Show CLI suggestions and explanations 
-https://www.youtube.com/watch?v=VkOibxsQ1oU -->
-
----
-
-# **Spec Kit - Next-Level Development**
-
-**What is Spec Kit?**
-- AI-powered specification generation
-- Transform natural language into detailed specs
-- Accelerate project planning and development
-
-**Key Features:**
-- Generate technical specifications from descriptions
-- Create user stories and acceptance criteria
-- Build API documentation automatically
-- Integration with GitHub workflows
-
-<!-- 
-**Learn More:** 
-🎥 [YouTube Demo](https://www.youtube.com/watch?v=a9eR1xsfvHg)
-
-Demo: Show Spec Kit in action for project planning -->
-
----
 # **Thank You!**
 
 
