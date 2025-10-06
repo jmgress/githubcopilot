@@ -163,6 +163,28 @@ Copilot is a powerful tool at your service, not a replacement for your knowledge
 
 ---
 
+# **Check Copilot's Work**
+
+**Always Validate AI-Generated Code:**
+
+## **Understanding & Review**
+- **Understand suggested code** before implementing it
+- **Ask Copilot Chat to explain** if you're unsure
+- **Review carefully** for functionality, security, readability
+
+## **Automated Validation**
+- **Use automated tests** to verify correctness
+- **Run linting tools** for code quality
+- **Code scanning** for security vulnerabilities
+- **IP scanning** for license compliance
+
+## **Remember: You're Responsible!**
+Copilot is powerful but can make mistakes - always validate before shipping.
+
+<!-- Demo: Show code review process and tooling integration -->
+
+---
+
 # **Time for Live Demo! 🚀**
 
 ## **Switching to Hands-On Experience**
