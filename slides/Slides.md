@@ -165,7 +165,6 @@ Copilot is a powerful tool at your service, not a replacement for your knowledge
 
 # **Check Copilot's Work**
 
-**Always Validate AI-Generated Code:**
 
 ## **Understanding & Review**
 - **Understand suggested code** before implementing it
@@ -176,7 +175,8 @@ Copilot is a powerful tool at your service, not a replacement for your knowledge
 - **Use automated tests** to verify correctness
 - **Run linting tools** for code quality
 - **Code scanning** for security vulnerabilities
-- **IP scanning** for license compliance
+
+---
 
 ## **Remember: You're Responsible!**
 Copilot is powerful but can make mistakes - always validate before shipping.
