@@ -389,9 +389,28 @@ Always provide specific suggestions with examples.
 
 ---
 
-# **What are Sparkles?** 
+# **What are Sparkles? ✨**
 
-<!-- Interactive question slide to engage the audience about GitHub Copilot's sparkle indicators -->
+## **Interactive Question for the Audience**
+
+**Have you noticed sparkles in VS Code?**
+
+**What do you think they mean?**
+
+<!-- Let audience guess before revealing the answer -->
+
+---
+
+# **Sparkles Explained ✨**
+
+**Sparkles are visual indicators in VS Code that show:**
+- AI-powered suggestions are available
+- Copilot can help with the current context
+- Interactive features you can click or invoke
+
+
+
+<!-- Demo: Show sparkles in action and explain when they appear -->
 
 ---
 
