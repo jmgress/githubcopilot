@@ -218,6 +218,23 @@ table {
 
 ---
 
+# **Chat History Tip ⬆️**
+
+**Did you know?**
+
+Press the **up arrow (↑)** in the chat input to quickly access your previous chat messages!
+
+**Benefits:**
+- Quickly repeat or modify previous questions
+- No need to retype complex queries
+- Navigate through your recent chat history
+
+**Pro Tip:** Use this to iterate on your questions without starting over
+
+<!-- Demo: Show up arrow navigation through chat history -->
+
+---
+
 # **Copilot Chat Actions**
 
 **After Getting a Response, You Can:**
