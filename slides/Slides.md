@@ -487,6 +487,36 @@ Generate comprehensive unit tests for the selected function including:
 
 ---
 
+# **Prompt File Examples in Action**
+
+## **Code Review Prompt**
+`.github/copilot/prompts/code-review.md`
+```markdown
+# Code Review Assistant
+Review the selected code for:
+- Security vulnerabilities and best practices
+- Performance optimizations
+- Code maintainability and readability
+- Adherence to project coding standards
+```
+**Usage:** `#code-review` + select code
+
+## **Architecture Documentation**
+`.github/copilot/prompts/arch-docs.md`
+```markdown
+# Architecture Documentation Generator
+Update architecture documentation for:
+- System design patterns used
+- Component relationships and dependencies
+- Data flow and API contracts
+- Deployment and scaling considerations
+```
+**Usage:** `#arch-docs` + select relevant files
+
+<!-- Demo: Show real prompt files solving common development tasks -->
+
+---
+
 # **Instructions.md File**
 
 **Create:** `instructions.md` (project root)
