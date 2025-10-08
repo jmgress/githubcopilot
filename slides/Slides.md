@@ -517,6 +517,35 @@ Update architecture documentation for:
 
 ---
 
+# **AI-Readable Documentation**
+
+## **Why Mermaid Diagrams Matter**
+- **Visual context** that AI can parse and understand
+- **Structured format** that enhances Copilot's comprehension
+- **Living documentation** that stays in sync with code
+
+## **Examples AI Can Easily Parse:**
+
+```mermaid
+graph TD
+    A[User Request] --> B[Authentication]
+    B --> C[Data Processing]
+    C --> D[Database Query]
+    D --> E[Response]
+```
+
+**Best Practices:**
+- Use **standardized formats** (Mermaid, PlantUML)
+- Include **clear labels** and descriptions
+- Keep diagrams **close to relevant code**
+- Add **comments explaining relationships**
+
+**Result:** Copilot understands your architecture and suggests better code!
+
+<!-- Demo: Show how diagrams improve Copilot's contextual suggestions -->
+
+---
+
 # **Instructions.md File**
 
 **Create:** `instructions.md` (project root)
