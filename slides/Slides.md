@@ -829,6 +829,25 @@ Add comment to issue #45: "Fixed the validation logic, testing in progress"
 
 ---
 
+# **GitHub Copilot Coding Agent: Autonomous Development**
+
+**What is the Coding Agent?**
+- Autonomous AI agent that can complete entire features
+- Assign GitHub issues directly to the agent
+- Works independently to implement solutions
+
+**How It Works:**
+
+1. **Assign Issue**: Tag `github-copilot` on any GitHub issue
+2. **Agent Analysis**: Reviews issue requirements and codebase
+3. **Implementation**: Creates branch, writes code, runs tests
+4. **Pull Request**: Submits PR with complete solution
+
+
+<!-- The coding agent handles end-to-end development autonomously -->
+
+---
+
 # **Thank You!**
 
 
