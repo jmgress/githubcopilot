@@ -764,6 +764,71 @@ This configuration ensures Copilot generates commit messages focused on content 
 
 ---
 
+# **MCP Servers: Connect to External Services**
+
+**Model Context Protocol (MCP)** enables Copilot to connect to external services like GitHub and Jira.
+
+**Popular MCP Servers:**
+
+- GitHub for repositories, issues, PRs
+- Atlassian for Jira and Confluence
+
+
+<!-- MCP servers extend Copilot's capabilities to enterprise systems -->
+
+---
+
+# **Setting Up MCP Servers**
+
+**Setup Process:**
+
+1. **Install MCP server extension** from VS Code marketplace
+2. **Configure authentication** (API keys/tokens)
+
+<!-- Proper setup ensures secure and reliable external service integration -->
+
+---
+
+# **Smart Agent Detection vs Explicit # Syntax**
+
+**Copilot Can Auto-Detect Context:**
+```text
+"Create a bug ticket for the login timeout issue"
+"Show me open issues in the frontend repo"
+"Update ticket DEV-456 status to In Progress"
+```
+
+**Use # for Explicit Control:**
+```text
+#getJiraIssue 
+#editJiraIssue 
+```
+
+---
+
+# **MCP Servers in Action: Real Developer Workflows**
+
+**Bug Discovery & Ticket Creation:**
+```text
+Create a high priority bug ticket in Jira for the login timeout issue in authentication module
+```
+
+**Pull Down Issues to Work On:**
+```text
+Show me all open issues assigned to me in the frontend repository
+List my current sprint tasks with status "To Do"
+```
+
+**Update Progress & Add Comments:**
+```text
+Update ticket AUTH-123 status to "In Progress" and add comment "Started investigating timeout configuration"
+Add comment to issue #45: "Fixed the validation logic, testing in progress"
+```
+
+<!-- MCP servers streamline the entire development lifecycle -->
+
+---
+
 # **Thank You!**
 
 
