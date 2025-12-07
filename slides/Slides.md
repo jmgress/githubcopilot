@@ -937,6 +937,70 @@ Add comment to issue #45: "Fixed the validation logic, testing in progress"
 
 ---
 
+# **GitHub Copilot CLI**
+
+---
+
+![bg contain](img/copilotcli.png)
+
+---
+
+# **GitHub Copilot CLI: AI in Your Terminal**
+
+**What is GitHub Copilot CLI?**
+- AI-powered command-line assistance
+- Natural language → shell commands
+- Works with bash, zsh, PowerShell, and more
+
+**Installation:**
+```bash
+# Install via GitHub CLI
+gh extension install github/gh-copilot
+
+# Update to latest version
+gh extension upgrade gh-copilot
+```
+
+**Three Main Commands:**
+
+1. **`gh copilot suggest`** - Get command suggestions
+   ```bash
+   gh copilot suggest "find all large files over 100MB"
+   ```
+
+2. **`gh copilot explain`** - Understand complex commands
+   ```bash
+   gh copilot explain "tar -xzvf archive.tar.gz"
+   ```
+
+3. **`gh copilot alias`** - Create convenient shortcuts
+   ```bash
+   # Add to your shell profile
+   eval "$(gh copilot alias -- zsh)"
+   # Then use: ghcs, ghce
+   ```
+
+**Examples:**
+```bash
+# Suggest commands
+ghcs "compress all .log files from last week"
+
+# Explain what a command does
+ghce "docker ps -a --filter status=exited"
+
+# Get help with git
+ghcs "undo my last 3 commits but keep the changes"
+```
+
+**Pro Tips:**
+- Use natural language - be conversational
+- Review commands before running (safety first!)
+- Great for learning new CLI tools and syntax
+
+<!-- GitHub Copilot CLI brings AI assistance to the command line -->
+
+---
+
 # **Thank You!**
 
 
