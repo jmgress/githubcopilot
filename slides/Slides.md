@@ -25,6 +25,12 @@ Specialize in AI in the SDLD or TDLC
 
 ---
 
+# **This Slide Deck Was Created Using GitHub Copilot**
+
+<!-- This slide deck itself is living proof of Copilot's capabilities -->
+
+---
+
 # **AI-Generated Code: CEO Insights (2025)**
 
 ---
@@ -182,6 +188,24 @@ Copilot is a powerful tool at your service, not a replacement for your knowledge
 Copilot is powerful but can make mistakes - always validate before shipping.
 
 <!-- Demo: Show code review process and tooling integration -->
+
+---
+
+# **FAQ: Does GitHub know about your entire codebase?**
+
+**Short answer:** Yes — GitHub builds an index of repositories (internally known as "Blackbird") to power code-aware features.
+
+**How it works:**
+- **Cloud indexing:** GitHub may process repository contents in the cloud to provide organization-level search, suggestions, and Copilot features.
+- **Local processing:** Some Copilot/IDE features can run locally so code stays on your machine when configured for local-only mode.
+
+**Privacy & access:**
+- Indexing respects repository permissions and organizational policies; enterprise admins can configure or opt out of certain indexing features.
+- Check your org settings and the Copilot/Code Assist privacy documentation to control data use.
+
+**Practical tip:** Use explicit scopes (`#codebase`, `@github`, or workspace context) when you want to limit what Copilot reads.
+
+<!-- Explains Blackbird and cloud/local indexing for common privacy question -->
 
 ---
 
@@ -374,17 +398,18 @@ Press the **up arrow (↑)** in the chat input to quickly access your previous c
 # **Built-in @ Agents**
 
 **Available Agents:**
-- `@workspace` - Entire codebase context
+- `@workspace` or `@codebase` - Entire codebase context
 - `@vscode` - VS Code specific questions
 - `@terminal` - Command line operations
 - `@github` - Specifically focused on GitHub platform features and workflows
 
 **Examples:**
-- "@workspace find all TODO comments"
+- "@workspace find all TODO comments" 
 - "@vscode how to configure extensions"
 - "@terminal run the build script"
 
-<!-- Demo: Show different agents and their capabilities -->
+<!-- Demo: Show different agents and their capabilities 
+you can also use cntl enter for @workspace-->
 
 ---
 
@@ -404,7 +429,71 @@ Press the **up arrow (↑)** in the chat input to quickly access your previous c
 
 ---
 
-# **Ask vs Edit vs Agent Modes**
+# **Plan Mode: Strategic Development Planning**
+
+**What is Plan Mode?**
+- AI-powered strategic planning for complex development tasks
+- Breaks down large projects into manageable steps
+- Provides detailed implementation roadmaps
+
+**When to Use Plan Mode:**
+
+- **Large Feature Development**: Multi-week projects with multiple components
+- **System Architecture**: Designing new systems or major refactoring
+- **Integration Projects**: Connecting multiple services or APIs
+- **Migration Tasks**: Moving from one technology stack to another
+
+**Plan Mode Workflow:**
+
+1. **Define Scope**: Describe your project requirements in detail
+2. **AI Analysis**: Copilot analyzes codebase and requirements
+3. **Strategic Plan**: Generates step-by-step implementation plan
+4. **Task Breakdown**: Creates actionable development tasks
+5. **Timeline Estimation**: Provides realistic time estimates
+
+**Example Plan Request:**
+```text
+Create a plan for implementing a user authentication system with:
+- Email/password login
+- Social media OAuth integration
+- Password reset functionality
+- JWT token management
+- Database schema design
+```
+
+**Plan Mode vs Other Modes:**
+
+| Aspect | Plan Mode | Ask/Edit/Agent Modes |
+|--------|-----------|---------------------|
+| **Scope** | Strategic planning | Immediate execution |
+| **Timeline** | Days/weeks | Minutes/hours |
+| **Output** | Detailed roadmap | Code implementation |
+| **Best For** | Project planning | Code development |
+
+<!-- Plan mode bridges the gap between planning and execution -->
+
+---
+
+# **Ask vs Edit vs Agent vs Plan Modes**
+
+<style scoped>
+table { 
+  font-size: 0.6em;
+}
+</style>
+
+| Feature | Ask Mode | Edit Mode | Agent Mode | Plan Mode |
+|---------|----------|-----------|------------|-----------|
+| **Purpose** | Get information | Modify code directly | Multi-file operations | Strategic planning |
+| **Access** | `Cmd/Ctrl + Shift + I` | `Cmd/Ctrl + I` | `@workspace` | Plan-specific commands |
+| **Scope** | Questions & explanations | Single code selection | Entire project | Project lifecycle |
+| **Output** | Text responses | Code changes | Complex workflows | Implementation roadmap |
+| **Timeline** | Instant | Minutes | Hours | Days/weeks |
+| **Best For** | Learning & debugging | Quick fixes | Architecture changes | Large projects |
+
+**Choose the right mode for your task complexity!**
+
+<!-- Demo: Show progression from Ask to Plan mode -->
 
 <style scoped>
 table { 
