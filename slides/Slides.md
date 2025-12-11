@@ -199,6 +199,10 @@ Copilot is powerful but can make mistakes - always validate before shipping.
 - **Cloud indexing:** GitHub may process repository contents in the cloud to provide organization-level search, suggestions, and Copilot features.
 - **Local processing:** Some Copilot/IDE features can run locally so code stays on your machine when configured for local-only mode.
 
+---
+
+# **FAQ: Does GitHub know about your entire codebase?**
+
 **Privacy & access:**
 - Indexing respects repository permissions and organizational policies; enterprise admins can configure or opt out of certain indexing features.
 - Check your org settings and the Copilot/Code Assist privacy documentation to control data use.
@@ -443,7 +447,9 @@ you can also use cntl enter for @workspace-->
 - **Integration Projects**: Connecting multiple services or APIs
 - **Migration Tasks**: Moving from one technology stack to another
 
-**Plan Mode Workflow:**
+---
+
+# **Plan Mode Workflow:**
 
 1. **Define Scope**: Describe your project requirements in detail
 2. **AI Analysis**: Copilot analyzes codebase and requirements
@@ -461,7 +467,9 @@ Create a plan for implementing a user authentication system with:
 - Database schema design
 ```
 
-**Plan Mode vs Other Modes:**
+---
+
+# **Plan Mode vs Other Modes:**
 
 | Aspect | Plan Mode | Ask/Edit/Agent Modes |
 |--------|-----------|---------------------|
@@ -629,6 +637,10 @@ Review the selected code for:
 ```
 **Usage:** `#code-review` + select code
 
+---
+
+# **Prompt File Examples in Action**
+
 ## **Architecture Documentation**
 `.github/copilot/prompts/arch-docs.md`
 ```markdown
@@ -661,6 +673,10 @@ graph TD
     C --> D[Database Query]
     D --> E[Response]
 ```
+
+---
+
+# **AI-Readable Documentation**
 
 **Best Practices:**
 - Use **standardized formats** (Mermaid, PlantUML)
@@ -824,7 +840,6 @@ This configuration ensures Copilot generates commit messages focused on content 
 - `#file:README.md` - Include specific file
 - `#file:src/utils.js` - Reference any project file
 - `#selection` - Current code selection
-- `#terminalLastCommand` - Last terminal output
 - `#codebase` - Entire project context
 
 **Benefits:**
@@ -849,9 +864,10 @@ This configuration ensures Copilot generates commit messages focused on content 
 - `@git` - Git operations
 - `@npm` - Package management
 
+<!--
 **Setup:** Extensions must support Copilot integration
 
-<!-- Demo: Show @ syntax with installed extensions -->
+ Demo: Show @ syntax with installed extensions -->
 
 ---
 
@@ -957,7 +973,7 @@ Add comment to issue #45: "Fixed the validation logic, testing in progress"
 
 ---
 
-# **GitHub Copilot Coding Agent: Autonomous Development**
+# **GitHub Copilot Coding Agent**
 
 **What is the Coding Agent?**
 - Autonomous AI agent that can complete entire features
@@ -1000,6 +1016,10 @@ gh extension install github/gh-copilot
 gh extension upgrade gh-copilot
 ```
 
+---
+
+# **GitHub Copilot CLI: AI in Your Terminal**
+
 **Three Main Commands:**
 
 1. **`gh copilot suggest`** - Get command suggestions
@@ -1019,6 +1039,10 @@ gh extension upgrade gh-copilot
    # Then use: ghcs, ghce
    ```
 
+---
+
+# **GitHub Copilot CLI: AI in Your Terminal**
+
 **Examples:**
 ```bash
 # Suggest commands
@@ -1030,11 +1054,6 @@ ghce "docker ps -a --filter status=exited"
 # Get help with git
 ghcs "undo my last 3 commits but keep the changes"
 ```
-
-**Pro Tips:**
-- Use natural language - be conversational
-- Review commands before running (safety first!)
-- Great for learning new CLI tools and syntax
 
 <!-- GitHub Copilot CLI brings AI assistance to the command line -->
 
