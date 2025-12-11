@@ -470,48 +470,87 @@ Create a plan for implementing a user authentication system with:
 | **Output** | Detailed roadmap | Code implementation |
 | **Best For** | Project planning | Code development |
 
-<!-- Plan mode bridges the gap between planning and execution -->
+<!-- Plan mode bridges the gap between planning and execution 
+https://www.youtube.com/watch?v=xR3fuKtWGN0
+-->
 
 ---
 
-# **Ask vs Edit vs Agent vs Plan Modes**
+# **Copilot Modes: Overview**
+
+GitHub Copilot offers four distinct modes for different development scenarios:
+
+**1. Ask Mode** - Questions and explanations
+**2. Edit Mode** - Direct code modifications  
+**3. Agent Mode** - Multi-file operations
+**4. Plan Mode** - Strategic project planning
+
+Let's explore how they differ and when to use each one...
+
+---
+
+# **Ask vs Edit Modes**
 
 <style scoped>
 table { 
-  font-size: 0.6em;
+  font-size: 0.75em;
 }
 </style>
 
-| Feature | Ask Mode | Edit Mode | Agent Mode | Plan Mode |
-|---------|----------|-----------|------------|-----------|
-| **Purpose** | Get information | Modify code directly | Multi-file operations | Strategic planning |
-| **Access** | `Cmd/Ctrl + Shift + I` | `Cmd/Ctrl + I` | `@workspace` | Plan-specific commands |
-| **Scope** | Questions & explanations | Single code selection | Entire project | Project lifecycle |
-| **Output** | Text responses | Code changes | Complex workflows | Implementation roadmap |
-| **Timeline** | Instant | Minutes | Hours | Days/weeks |
-| **Best For** | Learning & debugging | Quick fixes | Architecture changes | Large projects |
+| Feature | Ask Mode | Edit Mode |
+|---------|----------|-----------|
+| **Purpose** | Get information & explanations | Modify code directly |
+| **Access** | `Cmd/Ctrl + Shift + I` | `Cmd/Ctrl + I` |
+| **Scope** | Questions & learning | Single code selection |
+| **Output** | Text responses with examples | Immediate code changes |
+| **Timeline** | Instant answers | Takes minutes |
+| **Best For** | Learning, debugging, understanding | Quick fixes, refactoring |
 
-**Choose the right mode for your task complexity!**
+**Ask Mode:** Understanding code behavior, getting explanations
+**Edit Mode:** Making actual changes to your code
+
+---
+
+# **Agent vs Plan Modes**
+
+<style scoped>
+table { 
+  font-size: 0.75em;
+}
+</style>
+
+| Feature | Agent Mode | Plan Mode |
+|---------|------------|-----------|
+| **Purpose** | Multi-file operations | Strategic project planning |
+| **Access** | `@workspace` in chat | Plan-specific commands |
+| **Scope** | Entire project/workspace | Full project lifecycle |
+| **Output** | Complex workflows & changes | Implementation roadmap |
+| **Timeline** | Minutes to hours | Days to weeks |
+| **Best For** | Architecture changes, features | Large projects, migrations |
+
+**Agent Mode:** Executing complex multi-file operations
+**Plan Mode:** Planning and breaking down large initiatives
+
+---
+
+# **All Four Modes: Quick Reference**
+
+<style scoped>
+table { 
+  font-size: 0.65em;
+}
+</style>
+
+| | Ask | Edit | Agent | Plan |
+|---------|------|------|-------|------|
+| **Complexity** | Low | Low-Medium | Medium-High | High |
+| **Speed** | Instant | Fast | Moderate | Planning phase |
+| **Interaction** | Conversational | Direct | Command-based | Strategic |
+| **Learning Curve** | Easy | Easy | Moderate | Advanced |
+
+**Pro Tip:** Start with Ask mode to understand, use Edit for changes, leverage Agent for multi-file work, and employ Plan for major initiatives.
 
 <!-- Demo: Show progression from Ask to Plan mode -->
-
-<style scoped>
-table { 
-  font-size: 0.7em;
-}
-</style>
-
-| Feature | Ask Mode | Edit Mode | Agent Mode |
-|---------|----------|-----------|------------|
-| **Purpose** | Get information | Modify code directly | Multi-file operations |
-| **Access** | `Cmd/Ctrl + Shift + I` | `Cmd/Ctrl + I` | `@workspace` |
-| **Scope** | Questions & explanations | Single code selection | Entire project |
-| **Output** | Text responses | Code changes | Complex workflows |
-| **Best For** | Learning & debugging | Quick fixes | Architecture changes |
-
-**Choose the right mode for your task!**
-
-<!-- Demo: Show all three modes for the same problem -->
 
 ---
 
