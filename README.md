@@ -2,6 +2,8 @@
 
 A comprehensive presentation deck about using GitHub Copilot to supercharge coding in VS Code. This presentation was created using GitHub Copilot itself, demonstrating the tool's capabilities in action.
 
+The deck is a self-contained HTML file ([slides/index.html](slides/index.html)) with no external/CDN dependencies — all styles and the slide engine live inline, and images are local PNGs in `slides/img/`, so it runs offline in any browser.
+
 **Presented by:** James Gress, AI Director @ Accenture  
 **GitHub Pages:** [https://jmgress.github.io/githubcopilot/](https://jmgress.github.io/githubcopilot/)
 
@@ -44,13 +46,8 @@ This slide deck covers:
 ```
 githubcopilot/
 ├── slides/
-│   ├── Slides.md          # Main presentation content
-│   ├── img/               # Presentation images
-│   └── themes/            # Custom Marp themes
-│       ├── custom-default.css
-│       ├── custom-gaia.css
-│       ├── custom-uncover.css
-│       └── custom.css
+│   ├── index.html         # The presentation (inline CSS + slide engine)
+│   └── img/               # PNG images referenced by index.html
 ├── .github/
 │   └── workflows/         # GitHub Actions for deployment
 ├── .devcontainer/         # Dev container configuration
@@ -65,44 +62,38 @@ Visit the live presentation: [https://jmgress.github.io/githubcopilot/](https://
 
 ### Local Development
 
-1. Install [Visual Studio Code](https://code.visualstudio.com/)
-2. Install the [Marp for VS Code extension](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode)
-3. Open `slides/Slides.md` in VS Code
-4. Use the Marp preview to view and edit slides
+1. Open `slides/index.html` directly in any web browser (double-click it, or use a local server / VS Code Live Preview).
+2. Edit the markup, styles, or slide engine in `slides/index.html` — everything lives in that one file.
+3. Refresh the browser to see changes.
 
-### Export Options
+### Navigating the Deck
 
-The Marp extension allows you to export to:
-- **PDF** - For sharing and printing
-- **PowerPoint (PPTX)** - For further editing
-- **HTML** - For web hosting
-- **PNG/JPEG** - Individual slide images
+| Key | Action |
+|-----|--------|
+| `→` / `Space` / `PgDn` | Next slide |
+| `←` / `PgUp` | Previous slide |
+| `Home` / `End` | First / last slide |
+| `S` | Toggle speaker notes |
+| `F` | Toggle fullscreen |
+| `?` | Show keyboard help |
 
-## 🎨 Custom Themes
+The deck also supports click-to-advance, touch swipe, and deep-linking to a slide via the URL hash (e.g. `index.html#12`).
 
-This presentation uses custom Marp themes located in `slides/themes/`:
+### Export to PDF
 
-- `custom-default.css` - Based on the built-in default theme
-- `custom-gaia.css` - Based on the built-in gaia theme  
-- `custom-uncover.css` - Based on the built-in uncover theme
-- `custom.css` - Fully custom theme
+Open the deck in a Chromium-based browser and use **Print → Save as PDF** (landscape). The print stylesheet renders one slide per page.
 
-The active theme is specified in the `Slides.md` frontmatter:
+### Updating Images
 
-```yaml
----
-marp: true
-theme: custom-default
----
-```
+Images live in `slides/img/` as PNG files and are referenced from `index.html` by relative path (e.g. `img/name.png`). To change an image, replace the PNG in that folder (or add a new one and update the matching `src` / `background-image`). Keep `index.html` and the `img/` folder together when deploying or sharing.
 
 ## 🚢 Publishing on GitHub Pages
 
-This repository is configured to automatically build and publish to GitHub Pages:
+This repository is configured to automatically publish to GitHub Pages:
 
 1. Push changes to the `main` branch
-2. GitHub Actions will automatically build the presentation
-3. The site will be published to `https://jmgress.github.io/githubcopilot/`
+2. GitHub Actions copies `slides/index.html` to the site root
+3. The site is published to `https://jmgress.github.io/githubcopilot/`
 
 To set up for your own repository:
 1. Navigate to `Settings` > `Pages` > `Build and deployment`
@@ -111,20 +102,14 @@ To set up for your own repository:
 
 ## 📚 Resources
 
-### Marp Documentation
-- [Marp Official Repository](https://github.com/marp-team/marp)
-- [Marp Official Documentation](https://marpit.marp.app/markdown)
-- [Marp for VS Code Documentation](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode)
-- [Custom Theme Documentation](https://marpit.marp.app/theme-css)
-
 ### GitHub Copilot
 - [GitHub Copilot Documentation](https://docs.github.com/en/copilot)
-- [GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)
+- [GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli)
 - [Model Context Protocol (MCP)](https://modelcontextprotocol.io/)
 
-### Markdown
-- [CommonMark Syntax Reference](https://commonmark.org/help/)
+### Web & Deployment
 - [GitHub Pages Documentation](https://docs.github.com/en/pages)
+- [Printing to PDF from the browser](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/print)
 
 ## 📄 License
 

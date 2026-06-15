@@ -30,7 +30,6 @@ jobs:
         run: |
           mkdir build
           cp slides/index.html build/index.html
-          cp -R slides/img build/img
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

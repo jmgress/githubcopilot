@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Use GitHub Copilot to Supercharge Your Coding in VS Code — James Gress</title>
+<style>
+  :root {
+    --bg: #0a1228;
+    --bg-deep: #050816;
+    --fg: #e8eefc;
+    --muted: #93a4c8;
+    --accent: #60a5fa;        /* primary blue */
+    --accent-2: #93c5fd;      /* light blue */
+    --good: #34d399;          /* green */
+    --amber: #fbbf24;         /* amber */
+    --bad: #f87171;           /* red */
+    --purple: #a78bfa;        /* purple */
+    --card: rgba(15, 26, 58, 0.6);
+    --card-solid: #0f1a3a;
+    --border: rgba(99, 145, 255, 0.12);
+    --border-strong: rgba(99, 145, 255, 0.22);
+    --code-bg: rgba(8, 15, 35, 0.72);
+    --code-border: rgba(99, 145, 255, 0.18);
+    --slide-pad: 34px;
+    --base-font: 24px;
+    --ui-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono-font: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #02040c;
+    color: var(--fg);
+    font-family: var(--ui-font);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  /* 16:9 stage (normal monitor aspect) scaled to fit the viewport */
+  #stage {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 1280px;
+    height: 720px;
+    transform: translate(-50%, -50%) scale(var(--scale, 1));
+    transform-origin: center center;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.6);
+  }
+
+  #deck {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: calc(var(--slide-pad) + 54px) calc(var(--slide-pad) * 1.4) var(--slide-pad);
+    background:
+      radial-gradient(60% 70% at 0% 0%, rgba(96, 165, 250, 0.18), transparent 60%),
+      radial-gradient(60% 70% at 100% 100%, rgba(129, 91, 248, 0.18), transparent 60%),
+      linear-gradient(135deg, var(--bg-deep) 0%, var(--bg) 100%);
+    color: var(--fg);
+    font-size: var(--base-font);
+    line-height: 1.45;
+    animation: fade .35s ease;
+  }
+  .slide.active { display: flex; }
+
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+  .slide h1 {
+    font-size: 2.0em;
+    margin: 0 0 0.4em;
+    color: var(--fg);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .slide h2 {
+    font-size: 1.35em;
+    margin: 0.2em 0 0.35em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .slide h3 {
+    font-size: 1.1em;
+    margin: 0.2em 0 0.3em;
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+  .slide p { margin: 0.35em 0; }
+  .slide ul, .slide ol { margin: 0.3em 0; padding-left: 1.4em; }
+  .slide li { margin: 0.22em 0; }
+  .slide li::marker { color: var(--accent); }
+  .slide strong { color: #fff; font-weight: 600; }
+  .slide em { color: var(--muted); }
+  .accent { color: var(--accent); }
+
+  /* Section divider slides */
+  .slide.section {
+    align-items: center;
+    text-align: center;
+    background:
+      radial-gradient(55% 65% at 0% 0%, rgba(96, 165, 250, 0.28), transparent 60%),
+      radial-gradient(55% 65% at 100% 100%, rgba(167, 139, 250, 0.28), transparent 60%),
+      linear-gradient(135deg, #050816 0%, #0d1838 60%, #141b46 100%);
+    color: #fff;
+  }
+  .slide.section h1 {
+    font-size: 2.6em;
+    background: linear-gradient(100deg, var(--accent) 0%, var(--accent-2) 35%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .slide.section h2 { color: var(--accent-2); }
+  .slide.center { align-items: center; text-align: center; }
+
+  /* Gradient headline helper */
+  .gradient-text {
+    background: linear-gradient(100deg, var(--accent) 0%, var(--accent-2) 35%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Title slide */
+  .title-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 2em;
+    align-items: center;
+    height: 100%;
+  }
+  .title-grid .photo {
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    justify-self: center;
+    box-shadow: 0 10px 50px rgba(96, 165, 250, 0.35);
+    border: 4px solid rgba(99, 145, 255, 0.4);
+  }
+  .title-grid h1 {
+    font-size: 2.3em;
+    background: linear-gradient(100deg, var(--accent) 0%, var(--accent-2) 40%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .social a {
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .5em;
+    margin: .25em 0;
+  }
+  .social a:hover { text-decoration: underline; }
+  .social .row { display: block; }
+  .icon { width: 1.1em; height: 1.1em; vertical-align: -0.15em; flex: 0 0 auto; }
+  .icon.li, .icon.gh, .icon.x, .icon.mu { color: var(--accent-2); }
+
+  /* Two & three column layouts */
+  .columns { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 2.2em; }
+  .columns3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1.4em; }
+  .card {
+    position: relative;
+    background: var(--card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1em 1.2em;
+    overflow: hidden;
+  }
+  /* subtle top-edge shimmer */
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.5), transparent);
+  }
+  .card + .card { margin-top: 8px; }
+  .card.good { border-left: 3px solid var(--good); }
+  .card.bad  { border-left: 3px solid var(--bad); }
+  .card.warn { border-left: 3px solid var(--amber); }
+  .card.info { border-left: 3px solid var(--purple); }
+  .card-title { font-size: 13px; font-weight: 600; color: var(--fg); margin: 0 0 0.4em; }
+
+  /* Pill-shaped status chips */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.35em 0.85em;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+  }
+  .chip.green  { color: var(--good);   background: rgba(52, 211, 153, 0.12); }
+  .chip.amber  { color: var(--amber);  background: rgba(251, 191, 36, 0.12); }
+  .chip.red    { color: var(--bad);    background: rgba(248, 113, 113, 0.12); }
+  .chip.purple { color: var(--purple); background: rgba(167, 139, 250, 0.12); }
+  .chip.blue   { color: var(--accent); background: rgba(96, 165, 250, 0.12); }
+
+  /* Section eyebrow labels */
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* Code blocks */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 10px;
+    padding: 0.9em 1.1em;
+    overflow: auto;
+    font-size: 0.82em;
+    line-height: 1.5;
+    margin: 0.5em 0;
+    color: #cde2ff;
+  }
+  code {
+    font-family: var(--mono-font);
+  }
+  p code, li code, td code {
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid var(--code-border);
+    border-radius: 6px;
+    padding: 0.05em 0.4em;
+    font-size: 0.88em;
+    color: var(--accent-2);
+  }
+
+  /* Tables */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.82em;
+    margin: 0.4em 0;
+  }
+  th, td { border: 1px solid var(--border); padding: 0.5em 0.7em; text-align: left; }
+  thead th {
+    background: rgba(96, 165, 250, 0.16);
+    color: var(--accent-2);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  tbody tr:nth-child(even) { background: rgba(99, 145, 255, 0.05); }
+
+  .kbd {
+    display: inline-block;
+    border: 1px solid var(--border-strong);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    background: rgba(15, 26, 58, 0.8);
+    color: var(--accent-2);
+    padding: 0.05em 0.5em;
+    font-family: var(--mono-font);
+    font-size: 0.85em;
+  }
+
+  .pill {
+    display: inline-block;
+    background: rgba(96, 165, 250, 0.14);
+    color: var(--accent);
+    border: 1px solid rgba(96, 165, 250, 0.4);
+    border-radius: 999px;
+    padding: 0.15em 0.9em;
+    font-size: 0.8em;
+    font-weight: 600;
+  }
+  .note-source { font-size: 0.78em; color: var(--muted); margin-top: 0.6em; font-family: var(--mono-font); }
+
+  .quote {
+    border-left: 3px solid var(--accent);
+    padding-left: 1em;
+    margin: 0.6em 0;
+  }
+  .quote .who { font-weight: 700; color: #fff; }
+  .quote .said { font-style: italic; color: var(--muted); }
+  .quote .when { font-size: 0.82em; color: var(--accent); font-family: var(--mono-font); }
+
+  /* Ghost text mockup */
+  .editor {
+    background: rgba(5, 10, 26, 0.85);
+    color: #c9d6f0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1em 1.3em;
+    font-family: var(--mono-font);
+    font-size: 0.9em;
+    line-height: 1.7;
+    box-shadow: 0 8px 30px rgba(0,0,0,.35);
+  }
+  .editor .ln { color: #5b6b8c; user-select: none; margin-right: 1.2em; }
+  .editor .kw { color: #ff7b72; }
+  .editor .fn { color: var(--purple); }
+  .editor .st { color: var(--accent-2); }
+  .editor .ghost { color: #5b6b8c; font-style: italic; }
+  .editor .cursor {
+    display: inline-block;
+    width: 2px; height: 1.1em;
+    background: var(--accent);
+    vertical-align: -0.2em;
+    animation: blink 1s steps(2) infinite;
+  }
+  @keyframes blink { 0%,50% { opacity: 1; } 51%,100% { opacity: 0; } }
+
+  /* Mermaid-replacement static flow diagram */
+  .flow { display: flex; align-items: center; justify-content: center; gap: 0.6em; flex-wrap: wrap; margin: 0.8em 0; }
+  .flow .node {
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: #fff;
+    border-radius: 10px;
+    padding: 0.6em 1.1em;
+    font-weight: 600;
+    font-size: 0.9em;
+    box-shadow: 0 4px 18px rgba(96, 165, 250, 0.35);
+  }
+  .flow .arrow { color: var(--accent); font-size: 1.4em; font-weight: 700; }
+
+  .bg-contain {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  /* Scaled header bar (inside the stage, above every slide) */
+  #header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 calc(var(--slide-pad) * 1.4);
+    border-bottom: 1px solid var(--border);
+    z-index: 4;
+    pointer-events: none;
+  }
+  #header .brand { display: flex; align-items: center; gap: 12px; }
+  #header .mark {
+    width: 26px; height: 26px;
+    border-radius: 7px;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    box-shadow: 0 2px 10px rgba(96, 165, 250, 0.45);
+    display: flex; align-items: center; justify-content: center;
+    flex: 0 0 auto;
+  }
+  #header .mark svg { width: 16px; height: 16px; color: #fff; }
+  #header .brand .eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); line-height: 1.3; }
+  #header .brand .htitle { font-size: 12px; font-weight: 600; color: var(--fg); line-height: 1.3; }
+  #header .hdate { font-family: var(--mono-font); font-size: 11px; color: var(--muted); letter-spacing: 0.5px; }
+
+  /* Footer + counter + controls */
+  .chrome {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    pointer-events: none;
+    z-index: 5;
+  }
+  .chrome .footer { opacity: 0.85; }
+  .chrome a { color: var(--accent); text-decoration: none; pointer-events: auto; }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    pointer-events: auto;
+  }
+  #counter { min-width: 4.5rem; text-align: center; font-variant-numeric: tabular-nums; font-family: var(--mono-font); }
+  .navbtn {
+    width: 2.3rem;
+    height: 2.3rem;
+    border: 1px solid var(--border-strong);
+    background: rgba(15, 26, 58, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--accent);
+    border-radius: 8px;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s, color .15s, opacity .15s;
+  }
+  .navbtn:hover:not(:disabled) { background: var(--accent); color: #050816; }
+  .navbtn:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+  .navbtn:disabled { opacity: 0.3; cursor: default; }
+  .navbtn svg { width: 1.1rem; height: 1.1rem; }
+
+  /* Progress bar */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--purple));
+    width: 0;
+    z-index: 6;
+    transition: width .25s ease;
+  }
+
+  /* Speaker notes overlay */
+  #notes {
+    position: fixed;
+    inset: auto 0 0 0;
+    max-height: 42vh;
+    overflow: auto;
+    background: rgba(5, 10, 26, 0.96);
+    color: var(--fg);
+    padding: 1.2em 1.6em;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    border-top: 2px solid var(--accent);
+    display: none;
+    z-index: 20;
+    white-space: pre-wrap;
+  }
+  #notes.show { display: block; }
+  #notes h4 { margin: 0 0 0.5em; color: var(--accent); font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* Help overlay */
+  #help {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 22, 0.94);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: var(--fg);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+  }
+  #help.show { display: flex; }
+  #help .panel { max-width: 520px; line-height: 1.8; }
+  #help table { color: var(--fg); font-size: 1rem; }
+  #help th, #help td { border-color: var(--border); }
+  #help thead th { background: rgba(96, 165, 250, 0.16); }
+
+  @media print {
+    html, body { overflow: visible; height: auto; background: #050816; }
+    #stage { position: static; transform: none; width: auto; height: auto; box-shadow: none; }
+    #deck { position: static; display: block; overflow: visible; }
+    #header { display: none !important; }
+    .slide { position: relative; display: flex !important; page-break-after: always; height: 100vh; }
+    .chrome, #progress, #notes, #help { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="stage">
+<div id="header">
+  <div class="brand">
+    <span class="mark" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.35c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.52.56.83 1.28.83 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0z"/></svg>
+    </span>
+    <div>
+      <div class="eyebrow" id="hdr-eyebrow">GitHub Copilot · VS Code</div>
+      <div class="htitle" id="hdr-title">Supercharge Your Coding</div>
+    </div>
+  </div>
+  <div class="hdate" id="hdr-date">2026-06-15</div>
+</div>
+<div id="deck">
+
+  <!-- 1: Title -->
+  <section class="slide" data-notes="Done 100s of prototypes. Taken 10+ applications to production ranging from simple RAG to more complex agentic systems. Specialize in AI in the SDLC / TDLC.">
+    <div class="title-grid">
+      <div>
+        <h1>Use GitHub Copilot to Supercharge Your Coding in VS Code</h1>
+        <h2>James Gress</h2>
+        <p><em>Advanced Technology Center AI Lead — Accenture</em></p>
+        <div class="social">
+          <span class="row"><a href="https://linkedin.com/in/jamesgress/"><svg class="icon li" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn: jamesgress</a></span>
+          <span class="row"><a href="https://github.com/jmgress"><svg class="icon gh" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.39 1.24-3.23-.12-.31-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.18.77.84 1.23 1.91 1.23 3.23 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/></svg>GitHub: jmgress</a></span>
+          <span class="row"><a href="https://x.com/jmgress"><svg class="icon x" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.656l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X.com: @jmgress</a></span>
+          <span class="row"><a href="https://www.meetup.com/tampa-bay-generative-ai-meetup/"><svg class="icon mu" viewBox="0 0 24 24" fill="currentColor"><path d="M19.7 14.74a2.36 2.36 0 0 1-1.9 2.3 2.27 2.27 0 0 1-.43.04c-.16.78-.78 1.4-1.6 1.48a1.9 1.9 0 0 1-1.5-.5 1.94 1.94 0 0 1-2.2.43 1.92 1.92 0 0 1-2.62.18 2.3 2.3 0 0 1-3.3-.62 2.36 2.36 0 0 1-2.45-3.1 2.62 2.62 0 0 1-.3-4.3 2.4 2.4 0 0 1 .9-3.43 2.32 2.32 0 0 1 2.06-2.8 2.3 2.3 0 0 1 3.1-1.36 2.35 2.35 0 0 1 4.02.5 2.3 2.3 0 0 1 2.95 1.6 2.4 2.4 0 0 1 1.9 3.04 2.6 2.6 0 0 1 1.06 4.05 2.36 2.36 0 0 1-.6 2.5 2.3 2.3 0 0 1 .61.28z"/></svg>Tampa Bay Generative AI Meetup</a></span>
+        </div>
+      </div>
+      <div class="photo" style="background-image:url('img/00-jamesgress.png')"></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide center" data-notes="This slide deck itself is living proof of Copilot's capabilities — built as a single self-contained HTML file with Copilot's help.">
+    <h1>This Slide Deck Was Created<br/>Using GitHub Copilot</h1>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide section">
+    <h1>AI-Generated Code</h1>
+    <h2>CEO Insights &amp; Where We Landed</h2>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide" data-notes="Sources: Satya Nadella https://www.windowscentral.com/software-apps/ai/satya-nadella-says-30-of-microsofts-code-is-written-by-ai | Sundar Pichai https://www.cnbc.com/2025/04/25/google-ceo-sundar-pichai-says-ai-generates-30percent-of-company-code.html">
+    <h1>What Leaders Said in 2025</h1>
+    <div class="quote">
+      <div class="who">Satya Nadella — Microsoft</div>
+      <div class="said">"20–30% of the code in our repos today is written by AI."</div>
+      <div class="when">Apr 29, 2025 · LlamaCon</div>
+    </div>
+    <div class="quote">
+      <div class="who">Sundar Pichai — Google</div>
+      <div class="said">"AI is generating more than 30% of the company's code."</div>
+      <div class="when">Apr 2025 · Alphabet Earnings Call</div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide" data-notes="Sources: Kevin Scott https://www.windowscentral.com/software-apps/ai/microsoft-cto-predicts-95percent-ai-generated-code-by-2030 | Zuckerberg https://www.theverge.com/2025/04/29/meta-ceo-mark-zuckerberg-ai-to-write-half-of-code-next-year | Amodei https://www.windowscentral.com/software-apps/ai/anthropic-ceo-predicts-ai-writing-90percent-of-code-in-6-months">
+    <h1>Their 2025 Projections</h1>
+    <div class="quote">
+      <div class="who">Kevin Scott — Microsoft CTO</div>
+      <div class="said">"95% of all code will be AI-generated by 2030."</div>
+      <div class="when">Apr 2025</div>
+    </div>
+    <div class="quote">
+      <div class="who">Mark Zuckerberg — Meta</div>
+      <div class="said">"Within a year, maybe half of development will be done by AI."</div>
+      <div class="when">Apr 29, 2025 · LlamaCon</div>
+    </div>
+    <div class="quote">
+      <div class="who">Dario Amodei — Anthropic</div>
+      <div class="said">"We're 3–6 months from AI writing 90% of code."</div>
+      <div class="when">Mar 12, 2025</div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide" data-notes="The 2025 predictions of 50%+ have largely played out: by 2026 AI assists with the majority of new code at many large orgs, while humans stay firmly in the review-and-direct seat.">
+    <h1>One Year Later (2026)</h1>
+    <ul>
+      <li><strong>2025:</strong> 20–30% of production code was AI-generated.</li>
+      <li><strong>2026:</strong> The "50%+ within a year" calls have largely <strong>materialized</strong> at major orgs — AI now drafts the majority of new code.</li>
+      <li><strong>By 2030:</strong> 95% projected.</li>
+    </ul>
+    <p class="accent"><strong>The constant:</strong> humans still review, direct, and own the outcome.</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide" data-notes="Emphasize that developers remain in control and responsible for code quality.">
+    <h1>Copilot's Strengths &amp; Weaknesses</h1>
+    <div class="columns">
+      <div class="card good">
+        <h2>Copilot Does Best ✅</h2>
+        <ul>
+          <li>Writing tests and repetitive code</li>
+          <li>Debugging and correcting syntax</li>
+          <li>Explaining and commenting code</li>
+          <li>Generating regular expressions</li>
+          <li>Scaffolding and boilerplate</li>
+        </ul>
+      </div>
+      <div class="card bad">
+        <h2>Not Designed For ❌</h2>
+        <ul>
+          <li>Non-coding / non-technical prompts</li>
+          <li>Replacing your expertise and judgment</li>
+          <li>Owning architectural decisions</li>
+        </ul>
+      </div>
+    </div>
+    <p class="accent"><strong>Remember: You are in charge!</strong> Copilot is a tool at your service, not a replacement for your knowledge.</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide" data-notes="Demo: Show difference between vague vs. specific prompts.">
+    <h1>Create Thoughtful Prompts</h1>
+    <div class="columns">
+      <div class="card">
+        <h2>Structure Your Requests</h2>
+        <ul>
+          <li><strong>Break down</strong> complex tasks into steps</li>
+          <li><strong>Be specific</strong> about requirements</li>
+          <li><strong>Provide examples</strong> of inputs/outputs</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Good Practices</h2>
+        <ul>
+          <li><strong>Follow coding standards</strong> in prompts</li>
+          <li><strong>Include context</strong> about your project</li>
+          <li><strong>Specify frameworks/libraries</strong> in use</li>
+        </ul>
+      </div>
+    </div>
+    <p class="accent"><strong>Clear prompts = better results from Copilot!</strong></p>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide" data-notes="Demo: Show code review process and tooling integration.">
+    <h1>Check Copilot's Work</h1>
+    <div class="columns">
+      <div class="card">
+        <h2>Understanding &amp; Review</h2>
+        <ul>
+          <li>Understand suggested code before merging</li>
+          <li>Ask Copilot Chat to explain if unsure</li>
+          <li>Review for functionality, security, readability</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Automated Validation</h2>
+        <ul>
+          <li>Use automated tests to verify correctness</li>
+          <li>Run linting tools for code quality</li>
+          <li>Code scanning for security vulnerabilities</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide center" data-notes="">
+    <h1 class="accent">Remember: You're Responsible!</h1>
+    <p style="font-size:1.2em;">Copilot is powerful but can make mistakes — always validate before shipping.</p>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide" data-notes="Explains Blackbird and cloud/local indexing for the common privacy question.">
+    <h1>FAQ: Does GitHub know your entire codebase?</h1>
+    <p><span class="pill">Short answer</span> Yes — GitHub builds an index of repositories (internally "Blackbird") to power code-aware features.</p>
+    <h2>How it works</h2>
+    <ul>
+      <li><strong>Cloud indexing:</strong> repository contents can be processed in the cloud for org-level search, suggestions, and Copilot features.</li>
+      <li><strong>Local processing:</strong> some IDE features run locally so code stays on your machine when configured for it.</li>
+    </ul>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide" data-notes="Use explicit scopes to control what Copilot reads.">
+    <h1>FAQ: Privacy &amp; Access</h1>
+    <ul>
+      <li>Indexing respects repository permissions and org policies; enterprise admins can configure or opt out.</li>
+      <li>Check your org settings and the Copilot privacy docs to control data use.</li>
+    </ul>
+    <p class="accent"><strong>Practical tip:</strong> Use explicit scopes like <code>#codebase</code>, <code>@github</code>, or workspace context to limit what Copilot reads.</p>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide section">
+    <h1>Time for Live Demo! 🚀</h1>
+    <h2>Switching to Hands-On Experience</h2>
+    <p>Live demos in VS Code — what could go wrong? :) The remaining slides are reference material to revisit later.</p>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide" data-notes="Requires an active GitHub Copilot subscription (free tier available).">
+    <h1>Setting Up GitHub Copilot in VS Code</h1>
+    <h2>Quick Setup</h2>
+    <ol>
+      <li><strong>Install Extension:</strong> search "GitHub Copilot" in Extensions</li>
+      <li><strong>Sign In:</strong> Command Palette → <code>GitHub Copilot: Sign In</code></li>
+      <li><strong>Start Coding:</strong> open any file and begin typing</li>
+    </ol>
+    <p class="note-source">A free Copilot tier is available to all GitHub accounts; paid plans add more usage and models.</p>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide center" data-notes="Let the audience guess before showing the example.">
+    <h1>Pop Quiz! 🤔</h1>
+    <h1 class="accent">What is Ghost Text? 👻</h1>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide" data-notes="Demo tips: Show live coding with ghost text appearing; demonstrate accepting/rejecting; show how context influences suggestions.">
+    <h1>Ghost Text &amp; Code Completion</h1>
+    <div class="editor">
+      <div><span class="ln">1</span><span class="kw">function</span> <span class="fn">calculateTotal</span>(items) {</div>
+      <div><span class="ln">2</span>&nbsp;&nbsp;<span class="kw">return</span> items.<span class="ghost">reduce((sum, item) =&gt; sum + item.price, 0);</span><span class="cursor"></span></div>
+      <div><span class="ln">3</span><span class="ghost">}</span></div>
+    </div>
+    <ul>
+      <li><strong>Ghost Text:</strong> gray suggestions that appear as you type</li>
+      <li><span class="kbd">Tab</span> accept &nbsp;·&nbsp; <span class="kbd">Esc</span> dismiss</li>
+    </ul>
+  </section>
+
+  <!-- 17 -->
+  <section class="slide" data-notes="Reference these shortcuts during live demos. Shortcuts can vary by VS Code version and keybinding profile.">
+    <h1>Keyboard Shortcuts</h1>
+    <table>
+      <thead><tr><th>Action</th><th>macOS</th><th>Windows/Linux</th></tr></thead>
+      <tbody>
+        <tr><td>Accept suggestion</td><td><span class="kbd">Tab</span></td><td><span class="kbd">Tab</span></td></tr>
+        <tr><td>Dismiss suggestion</td><td><span class="kbd">Esc</span></td><td><span class="kbd">Esc</span></td></tr>
+        <tr><td>Next suggestion</td><td><span class="kbd">Option + ]</span></td><td><span class="kbd">Alt + ]</span></td></tr>
+        <tr><td>Previous suggestion</td><td><span class="kbd">Option + [</span></td><td><span class="kbd">Alt + [</span></td></tr>
+        <tr><td>Trigger suggestion</td><td><span class="kbd">Option + \</span></td><td><span class="kbd">Alt + \</span></td></tr>
+        <tr><td>Open Chat view</td><td><span class="kbd">Ctrl + Cmd + I</span></td><td><span class="kbd">Ctrl + Alt + I</span></td></tr>
+        <tr><td>Inline Chat</td><td><span class="kbd">Cmd + I</span></td><td><span class="kbd">Ctrl + I</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 18 -->
+  <section class="slide center" data-notes="Interactive question to engage audience about AI chat problems.">
+    <h1>Another Pop Quiz! 🤔</h1>
+    <h2>Do you know what these are?</h2>
+    <p style="font-size:1.3em;">Context Creep 🌊 &nbsp;&nbsp; Context Confusion 😵‍💫</p>
+  </section>
+
+  <!-- 19 -->
+  <section class="slide" data-notes="Explain the problems before showing the solution.">
+    <h1>Context Creep &amp; Context Confusion</h1>
+    <div class="columns">
+      <div class="card">
+        <h2>Context Creep 🌊</h2>
+        <ul>
+          <li>Conversations gradually drift off-topic</li>
+          <li>Irrelevant info accumulates over time</li>
+          <li>AI gets "distracted" by earlier discussions</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Context Confusion 😵‍💫</h2>
+        <ul>
+          <li>AI mixes up different topics/projects</li>
+          <li>Wrong assumptions from earlier context</li>
+          <li>Reduced accuracy and relevance</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20 -->
+  <section class="slide" data-notes="Demo: Show context pollution vs. fresh chat results.">
+    <h1>Start Fresh Chats</h1>
+    <div class="columns">
+      <div class="card">
+        <h2>Why Start New</h2>
+        <ul>
+          <li>Avoid context confusion &amp; topic drift</li>
+          <li>Get focused suggestions</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>When to Start New</h2>
+        <ul>
+          <li>Switching files/projects</li>
+          <li>Different programming language</li>
+          <li>New feature vs. bug fix</li>
+          <li>Code review vs. implementation</li>
+        </ul>
+      </div>
+    </div>
+    <p class="accent"><strong>How:</strong> Click "New Chat" or <span class="kbd">Ctrl/Cmd + L</span></p>
+  </section>
+
+  <!-- 21 -->
+  <section class="slide" data-notes="Show both chat panel and inline chat demos.">
+    <h1>Ask Mode — Copilot Chat</h1>
+    <h2>Access</h2>
+    <ul>
+      <li>Chat view: <span class="kbd">Ctrl + Cmd + I</span> (mac) / <span class="kbd">Ctrl + Alt + I</span></li>
+      <li>Inline Chat: <span class="kbd">Cmd/Ctrl + I</span></li>
+    </ul>
+    <h2>Examples</h2>
+    <ul>
+      <li>Explain this code</li>
+      <li>Generate unit tests</li>
+      <li>How do I run this code?</li>
+      <li>What are the options for <code>pip install</code>?</li>
+    </ul>
+  </section>
+
+  <!-- 22 -->
+  <section class="slide" data-notes="Demo: Show up arrow navigation through chat history.">
+    <h1>Chat History Tip ⬆️</h1>
+    <p>Press the <span class="kbd">↑</span> arrow in the chat input to quickly recall your previous chat messages.</p>
+    <h2>Benefits</h2>
+    <ul>
+      <li>Quickly repeat or modify previous questions</li>
+      <li>No need to retype complex queries</li>
+      <li>Navigate through your recent history</li>
+    </ul>
+    <p class="accent"><strong>Pro Tip:</strong> Iterate on questions without starting over.</p>
+  </section>
+
+  <!-- 23 -->
+  <section class="slide" data-notes="Demo: Show the action buttons that appear with chat responses.">
+    <h1>Copilot Chat Actions</h1>
+    <p>After getting a response, you can:</p>
+    <ul>
+      <li>📋 <strong>Copy</strong> — copy response to clipboard</li>
+      <li>💾 <strong>Insert at Cursor</strong> — add code at cursor position</li>
+      <li>📝 <strong>Insert in New File</strong> — create a new file</li>
+      <li>💻 <strong>Insert in Terminal</strong> — run command in terminal</li>
+      <li>🔄 <strong>Apply in Editor</strong> — replace/modify existing code</li>
+    </ul>
+    <p class="accent"><strong>Pro Tip:</strong> Hover over code blocks in chat to reveal action buttons.</p>
+  </section>
+
+  <!-- 24 -->
+  <section class="slide" data-notes="Demo: Select code, use Cmd+I, show direct edits.">
+    <h1>Edit Mode — Direct Code Changes</h1>
+    <h2>Access</h2>
+    <ul>
+      <li>Select code + <span class="kbd">Cmd/Ctrl + I</span></li>
+      <li>Switch the Chat view mode dropdown to <strong>Edit</strong></li>
+    </ul>
+    <h2>Examples</h2>
+    <ul>
+      <li>"Add error handling"</li>
+      <li>"Convert to async/await"</li>
+      <li>"Add TypeScript types"</li>
+      <li>"Refactor this function"</li>
+    </ul>
+  </section>
+
+  <!-- 25 -->
+  <section class="slide" data-notes="Demo: Show different chat participants and their capabilities. You can also use Ctrl+Enter for @workspace.">
+    <h1>Built-in Chat Participants (@)</h1>
+    <h2>Available Participants</h2>
+    <ul>
+      <li><code>@workspace</code> — reason over your entire codebase</li>
+      <li><code>@vscode</code> — VS Code settings &amp; features</li>
+      <li><code>@terminal</code> — command-line help</li>
+      <li><code>@github</code> — GitHub platform, web search &amp; knowledge bases</li>
+    </ul>
+    <h2>Examples</h2>
+    <ul>
+      <li>"@workspace find all TODO comments"</li>
+      <li>"@vscode how do I configure extensions?"</li>
+      <li>"@terminal run the build script"</li>
+    </ul>
+  </section>
+
+  <!-- 26 -->
+  <section class="slide" data-notes="Demo: Agent mode autonomously edits multiple files and runs terminal commands, iterating until the task is done. Pick a model (GPT, Claude, Gemini, Grok) from the model dropdown.">
+    <h1>Agent Mode — Autonomous Multi-File Tasks</h1>
+    <h2>Access</h2>
+    <ul>
+      <li>Open the Chat view and select <strong>Agent</strong> from the mode dropdown (Ask · Edit · Agent)</li>
+    </ul>
+    <h2>What it does</h2>
+    <ul>
+      <li>Plans the work, edits multiple files, and runs terminal commands</li>
+      <li>Self-corrects from errors and test failures, iterating to completion</li>
+      <li>Invokes tools &amp; MCP servers; you approve actions along the way</li>
+    </ul>
+    <p class="accent"><strong>Examples:</strong> "Add a new component and wire it up" · "Migrate this feature and run the tests"</p>
+  </section>
+
+  <!-- 27 -->
+  <section class="slide" data-notes="">
+    <h1>Plan Mode: Strategic Planning</h1>
+    <h2>What is Plan Mode?</h2>
+    <ul>
+      <li>AI-assisted planning for complex development tasks</li>
+      <li>Breaks large projects into manageable steps</li>
+      <li>Produces a reviewable implementation roadmap <em>before</em> code is written</li>
+    </ul>
+    <h2>When to Use</h2>
+    <ul>
+      <li>Large multi-component features</li>
+      <li>System architecture / major refactors</li>
+      <li>Integration &amp; migration projects</li>
+    </ul>
+  </section>
+
+  <!-- 28 -->
+  <section class="slide" data-notes="Plan mode is available in the VS Code Chat mode dropdown and in Copilot CLI (Shift+Tab).">
+    <h1>Plan Mode Workflow</h1>
+    <ol>
+      <li><strong>Define Scope:</strong> describe requirements in detail</li>
+      <li><strong>AI Analysis:</strong> Copilot reviews codebase &amp; requirements</li>
+      <li><strong>Strategic Plan:</strong> generates a step-by-step plan</li>
+      <li><strong>Task Breakdown:</strong> creates actionable tasks</li>
+      <li><strong>Review &amp; Approve:</strong> you refine before execution</li>
+    </ol>
+    <pre><code>Create a plan for a user authentication system with:
+- Email/password login
+- Social OAuth integration
+- Password reset
+- JWT token management
+- Database schema design</code></pre>
+  </section>
+
+  <!-- 29 -->
+  <section class="slide" data-notes="Plan mode bridges the gap between planning and execution.">
+    <h1>Plan Mode vs Other Modes</h1>
+    <table>
+      <thead><tr><th>Aspect</th><th>Plan Mode</th><th>Ask / Edit / Agent</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Scope</strong></td><td>Strategic planning</td><td>Immediate execution</td></tr>
+        <tr><td><strong>Horizon</strong></td><td>Days / weeks</td><td>Minutes / hours</td></tr>
+        <tr><td><strong>Output</strong></td><td>Detailed roadmap</td><td>Code implementation</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Project planning</td><td>Code development</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 30 -->
+  <section class="slide" data-notes="">
+    <h1>Copilot Modes: Overview</h1>
+    <p>GitHub Copilot offers distinct modes for different scenarios:</p>
+    <ol>
+      <li><strong>Ask Mode</strong> — questions &amp; explanations</li>
+      <li><strong>Edit Mode</strong> — direct code modifications</li>
+      <li><strong>Agent Mode</strong> — autonomous multi-file operations</li>
+      <li><strong>Plan Mode</strong> — strategic project planning</li>
+    </ol>
+    <p class="accent">Let's explore how they differ and when to use each…</p>
+  </section>
+
+  <!-- 31 -->
+  <section class="slide" data-notes="">
+    <h1>Ask vs Edit Modes</h1>
+    <table>
+      <thead><tr><th>Feature</th><th>Ask Mode</th><th>Edit Mode</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Purpose</strong></td><td>Info &amp; explanations</td><td>Modify code directly</td></tr>
+        <tr><td><strong>Access</strong></td><td>Chat view (Ask)</td><td>Chat view (Edit) / <span class="kbd">Cmd/Ctrl + I</span></td></tr>
+        <tr><td><strong>Scope</strong></td><td>Questions &amp; learning</td><td>Selected files</td></tr>
+        <tr><td><strong>Output</strong></td><td>Text + examples</td><td>Code changes</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Learning, debugging</td><td>Quick fixes, refactoring</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 32 -->
+  <section class="slide" data-notes="">
+    <h1>Agent vs Plan Modes</h1>
+    <table>
+      <thead><tr><th>Feature</th><th>Agent Mode</th><th>Plan Mode</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Purpose</strong></td><td>Autonomous multi-file work</td><td>Strategic planning</td></tr>
+        <tr><td><strong>Access</strong></td><td>Mode dropdown → Agent</td><td>Mode dropdown → Plan</td></tr>
+        <tr><td><strong>Scope</strong></td><td>Entire project/workspace</td><td>Full project lifecycle</td></tr>
+        <tr><td><strong>Output</strong></td><td>Workflows &amp; changes</td><td>Implementation roadmap</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Features, refactors</td><td>Large projects, migrations</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 33 -->
+  <section class="slide" data-notes="Demo: Show progression from Ask to Plan mode.">
+    <h1>All Four Modes: Quick Reference</h1>
+    <table>
+      <thead><tr><th></th><th>Ask</th><th>Edit</th><th>Agent</th><th>Plan</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Complexity</strong></td><td>Low</td><td>Low–Med</td><td>Med–High</td><td>High</td></tr>
+        <tr><td><strong>Speed</strong></td><td>Instant</td><td>Fast</td><td>Moderate</td><td>Planning</td></tr>
+        <tr><td><strong>Interaction</strong></td><td>Conversational</td><td>Direct</td><td>Autonomous</td><td>Strategic</td></tr>
+        <tr><td><strong>Learning Curve</strong></td><td>Easy</td><td>Easy</td><td>Moderate</td><td>Advanced</td></tr>
+      </tbody>
+    </table>
+    <p class="accent"><strong>Pro Tip:</strong> Ask to understand → Edit for changes → Agent for multi-file work → Plan for big initiatives.</p>
+  </section>
+
+  <!-- 34 -->
+  <section class="slide" data-notes="Demo: Create file and show how it affects suggestions. AGENTS.md is also honored as an open standard.">
+    <h1>Repository Custom Instructions</h1>
+    <p><strong>Create:</strong> <code>.github/copilot-instructions.md</code> &nbsp;(repo-wide, always applied)</p>
+    <pre><code>- Use TypeScript for new files
+- All functions include JSDoc comments
+- Follow company naming conventions
+- Always add error handling
+- Write unit tests for new functions</code></pre>
+    <ul>
+      <li>Team-wide consistency &amp; project-specific guidance</li>
+      <li>Version-controlled with your code</li>
+      <li><code>AGENTS.md</code> is also supported as an open, cross-tool standard</li>
+    </ul>
+  </section>
+
+  <!-- 35 -->
+  <section class="slide" data-notes="Explain difference: User = personal, Project = team-wide.">
+    <h1>Settings Locations</h1>
+    <h2>Personal (User Settings)</h2>
+    <ul>
+      <li>macOS: <code>~/Library/Application Support/Code/User/settings.json</code></li>
+      <li>Windows: <code>%APPDATA%\Code\User\settings.json</code></li>
+      <li>Linux: <code>~/.config/Code/User/settings.json</code></li>
+    </ul>
+    <h2>Project (Team Settings)</h2>
+    <ul>
+      <li><code>.vscode/settings.json</code></li>
+      <li>Command Palette → "Preferences: Open User Settings (JSON)"</li>
+    </ul>
+  </section>
+
+  <!-- 36 -->
+  <section class="slide" data-notes="Demo: Create prompt file and use it with the / syntax. Files live in .github/prompts and end in .prompt.md.">
+    <h1>Copilot Prompt Files</h1>
+    <p><strong>Create:</strong> <code>.github/prompts/&lt;name&gt;.prompt.md</code></p>
+    <p><strong>Example:</strong> <code>.github/prompts/test-generator.prompt.md</code></p>
+    <pre><code>---
+mode: agent
+description: Generate comprehensive unit tests
+---
+Generate unit tests for the selected function:
+- Happy path scenarios
+- Edge cases and error conditions
+- Mock external dependencies
+- Use the Jest testing framework</code></pre>
+    <p class="accent"><strong>Usage:</strong> type <code>/test-generator</code> in Copilot Chat</p>
+  </section>
+
+  <!-- 37 -->
+  <section class="slide" data-notes="Demo: Show real prompt files solving common development tasks.">
+    <h1>Prompt File Example: Code Review</h1>
+    <p><code>.github/prompts/code-review.prompt.md</code></p>
+    <pre><code># Code Review Assistant
+Review the selected code for:
+- Security vulnerabilities and best practices
+- Performance optimizations
+- Maintainability and readability
+- Adherence to project coding standards</code></pre>
+    <p class="accent"><strong>Usage:</strong> <code>/code-review</code> + select code</p>
+  </section>
+
+  <!-- 38 -->
+  <section class="slide" data-notes="Demo: Show real prompt files solving common development tasks.">
+    <h1>Prompt File Example: Architecture Docs</h1>
+    <p><code>.github/prompts/arch-docs.prompt.md</code></p>
+    <pre><code># Architecture Documentation Generator
+Update architecture documentation for:
+- System design patterns used
+- Component relationships and dependencies
+- Data flow and API contracts
+- Deployment and scaling considerations</code></pre>
+    <p class="accent"><strong>Usage:</strong> <code>/arch-docs</code> + relevant files</p>
+  </section>
+
+  <!-- 39 -->
+  <section class="slide" data-notes="Demo: Show how diagrams improve Copilot's contextual suggestions.">
+    <h1>AI-Readable Documentation</h1>
+    <h2>Why Diagrams Matter</h2>
+    <ul>
+      <li><strong>Visual context</strong> AI can parse and understand</li>
+      <li><strong>Structured format</strong> (Mermaid) enhances comprehension</li>
+      <li><strong>Living documentation</strong> that stays in sync with code</li>
+    </ul>
+    <div class="flow">
+      <span class="node">User Request</span><span class="arrow">→</span>
+      <span class="node">Authentication</span><span class="arrow">→</span>
+      <span class="node">Data Processing</span><span class="arrow">→</span>
+      <span class="node">Database Query</span><span class="arrow">→</span>
+      <span class="node">Response</span>
+    </div>
+  </section>
+
+  <!-- 40 -->
+  <section class="slide" data-notes="">
+    <h1>AI-Readable Documentation</h1>
+    <h2>Best Practices</h2>
+    <ul>
+      <li>Use <strong>standardized formats</strong> (Mermaid, PlantUML)</li>
+      <li>Include <strong>clear labels</strong> and descriptions</li>
+      <li>Keep diagrams <strong>close to relevant code</strong></li>
+      <li>Add <strong>comments explaining relationships</strong></li>
+    </ul>
+    <p class="accent"><strong>Result:</strong> Copilot understands your architecture and suggests better code!</p>
+  </section>
+
+  <!-- 41 -->
+  <section class="slide" data-notes="Demo: Create a path-specific instructions file and show automatic context. applyTo uses glob patterns.">
+    <h1>Path-Specific Instructions</h1>
+    <p><strong>Create:</strong> <code>.github/instructions/&lt;name&gt;.instructions.md</code></p>
+    <pre><code>---
+applyTo: "src/**/*.ts"
+---
+# TypeScript Code Style
+- Use camelCase for variables and functions
+- Add explicit types for all parameters
+- Include JSDoc comments for public functions
+- Keep components under 200 lines</code></pre>
+    <p class="accent">The <code>applyTo</code> glob scopes these rules to matching files automatically.</p>
+  </section>
+
+  <!-- 42 -->
+  <section class="slide" data-notes="Demo: Create a custom chat mode and pick it from the mode dropdown.">
+    <h1>Custom Chat Modes</h1>
+    <p><strong>Create:</strong> <code>.github/chatmodes/&lt;name&gt;.chatmode.md</code></p>
+    <pre><code>---
+description: Expert code reviewer
+tools: ['codebase', 'search']
+---
+You are an expert code reviewer. Focus on:
+- Security vulnerabilities
+- Performance optimizations
+- Maintainability &amp; best practices
+Always provide specific suggestions with examples.</code></pre>
+    <p class="accent"><strong>Usage:</strong> select your mode from the Chat view <strong>mode dropdown</strong></p>
+  </section>
+
+  <!-- 43 -->
+  <section class="slide center" data-notes="Let the audience guess before revealing the answer.">
+    <h1>Another Pop Quiz! 🤔</h1>
+    <h1 class="accent">What are Sparkles? ✨</h1>
+  </section>
+
+  <!-- 44 -->
+  <section class="slide" data-notes="Demo: Show sparkles in action and explain when they appear.">
+    <h1>Sparkles Explained ✨</h1>
+    <p>Sparkles are the <strong>✨ icons in VS Code</strong> that signal:</p>
+    <ul>
+      <li>AI-powered suggestions are available</li>
+      <li>Copilot can help with the current context</li>
+      <li>Interactive AI features you can click or invoke</li>
+    </ul>
+  </section>
+
+  <!-- 45 -->
+  <section class="slide" data-notes="Demo: Show settings configuration and behavior changes.">
+    <h1>Custom Instructions in Settings</h1>
+    <ul>
+      <li>VS Code Settings → GitHub Copilot</li>
+      <li>Project-specific <code>.vscode/settings.json</code></li>
+    </ul>
+    <pre><code>{
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    { "text": "Use conventional commit format" }
+  ],
+  "github.copilot.chat.codeGeneration.instructions": [
+    { "text": "Always add TypeScript types" }
+  ]
+}</code></pre>
+  </section>
+
+  <!-- 46 -->
+  <section class="slide" data-notes="This configuration ensures Copilot generates commit messages focused on content changes rather than technical implementation details.">
+    <h1>Configuring Commit Messages</h1>
+    <pre><code>{
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "For Slides changes, describe the change in
+       content — not the technical implementation."
+    }
+  ]
+}</code></pre>
+    <ul>
+      <li>Project-specific AI behavior tailored to your workflow</li>
+      <li>Team consistency through shared configuration</li>
+    </ul>
+  </section>
+
+  <!-- 47 -->
+  <section class="slide" data-notes="Benefits: project-specific AI behavior, team consistency, context-aware assistance.">
+    <h1>Where Project Settings Live</h1>
+    <pre><code>your-project/
+├── .vscode/
+│   └── settings.json
+├── .github/
+│   ├── copilot-instructions.md
+│   ├── instructions/
+│   ├── prompts/
+│   └── chatmodes/
+└── other-files...</code></pre>
+  </section>
+
+  <!-- 48 -->
+  <section class="slide" data-notes="Introduction to the three enhancement methods.">
+    <h1>Enhancing Copilot with Context</h1>
+    <p>Three ways to enhance your interactions:</p>
+    <ol>
+      <li><strong>Add Context (#)</strong> — files, selections, symbols, terminal output</li>
+      <li><strong>Use Participants/Extensions (@)</strong> — chat participants &amp; extensions</li>
+      <li><strong>Run Commands (/)</strong> — built-in Copilot commands &amp; prompt files</li>
+    </ol>
+    <p class="accent"><code>#</code> context &nbsp;·&nbsp; <code>@</code> participants &nbsp;·&nbsp; <code>/</code> commands</p>
+  </section>
+
+  <!-- 49 -->
+  <section class="slide" data-notes="Demo: Show different # context options.">
+    <h1>Adding Context (#)</h1>
+    <ul>
+      <li><code>#file:README.md</code> — include a specific file</li>
+      <li><code>#&lt;symbol&gt;</code> — reference a function, class, or variable</li>
+      <li><code>#selection</code> — current code selection</li>
+      <li><code>#codebase</code> — search the whole project for context</li>
+      <li><code>#terminalLastCommand</code> — last terminal command &amp; output</li>
+    </ul>
+    <p class="accent">More precise context → more accurate, relevant suggestions.</p>
+  </section>
+
+  <!-- 50 -->
+  <section class="slide" data-notes="Participants come from VS Code itself and from installed Copilot-compatible extensions / MCP servers.">
+    <h1>Using Participants &amp; Extensions (@)</h1>
+    <ul>
+      <li>Built-in: <code>@workspace</code>, <code>@vscode</code>, <code>@terminal</code>, <code>@github</code></li>
+      <li>Extension-provided participants appear in autocomplete</li>
+      <li>MCP servers add tools you can invoke from chat</li>
+    </ul>
+    <p class="note-source">Type <code>@</code> in chat to see every participant available in your install.</p>
+  </section>
+
+  <!-- 51 -->
+  <section class="slide" data-notes="Demo: Show / commands and their outputs. Your own prompt files also appear here as /name.">
+    <h1>Running Commands (/)</h1>
+    <ul>
+      <li><code>/explain</code> — explain selected code</li>
+      <li><code>/fix</code> — fix issues in code</li>
+      <li><code>/tests</code> — generate test cases</li>
+      <li><code>/doc</code> — generate documentation</li>
+      <li><code>/new</code> — scaffold new files/projects</li>
+    </ul>
+    <p class="accent">Your custom prompt files also show up here as <code>/&lt;name&gt;</code>.</p>
+  </section>
+
+  <!-- 52 -->
+  <section class="slide" data-notes="Demo: Show complex multi-part requests that actually work.">
+    <h1>Combining #, @ &amp; /</h1>
+    <p>Fix issues in a specific file:</p>
+    <pre><code>/fix #file:src/components/Button.js</code></pre>
+    <p>Generate tests for the selection:</p>
+    <pre><code>/tests #selection</code></pre>
+    <p>Explain with full codebase context:</p>
+    <pre><code>@workspace /explain #codebase</code></pre>
+  </section>
+
+  <!-- 53 -->
+  <section class="slide" data-notes="MCP servers extend Copilot's capabilities to enterprise systems.">
+    <h1>MCP Servers: Connect External Services</h1>
+    <p>The <strong>Model Context Protocol (MCP)</strong> lets Copilot connect to external tools &amp; data sources.</p>
+    <h2>Popular MCP Servers</h2>
+    <ul>
+      <li><strong>GitHub</strong> — repositories, issues, PRs, Actions</li>
+      <li><strong>Atlassian</strong> — Jira &amp; Confluence</li>
+      <li><strong>Playwright, databases, and many more</strong></li>
+    </ul>
+  </section>
+
+  <!-- 54 -->
+  <section class="slide" data-notes="Proper setup ensures secure and reliable external service integration. VS Code supports one-click MCP install and .vscode/mcp.json.">
+    <h1>Setting Up MCP Servers</h1>
+    <ol>
+      <li>Add the server in <code>.vscode/mcp.json</code> or via the MCP: Add Server command</li>
+      <li>Configure authentication (OAuth or API keys/tokens)</li>
+      <li>Enable it for Agent mode and start invoking its tools</li>
+    </ol>
+    <p class="note-source">VS Code supports one-click installs from the MCP gallery for many popular servers.</p>
+  </section>
+
+  <!-- 55 -->
+  <section class="slide" data-notes="Interactive question to engage audience about AI chat problems.">
+    <h1>Smart Detection vs Explicit Tools</h1>
+    <h2>Copilot can auto-detect intent</h2>
+    <pre><code>"Create a bug ticket for the login timeout issue"
+"Show me open issues in the frontend repo"
+"Update ticket DEV-456 status to In Progress"</code></pre>
+    <h2>Or invoke tools explicitly</h2>
+    <pre><code>#getJiraIssue
+#editJiraIssue</code></pre>
+  </section>
+
+  <!-- 56 -->
+  <section class="slide" data-notes="MCP servers streamline the entire development lifecycle.">
+    <h1>MCP in Action: Real Workflows</h1>
+    <h3>Bug discovery &amp; ticket creation</h3>
+    <pre><code>Create a high-priority Jira bug for the login
+timeout in the authentication module</code></pre>
+    <h3>Pull down issues to work on</h3>
+    <pre><code>Show open issues assigned to me in the frontend repo
+List my current sprint tasks with status "To Do"</code></pre>
+    <h3>Update progress</h3>
+    <pre><code>Set AUTH-123 to "In Progress" and comment
+"Started investigating timeout configuration"</code></pre>
+  </section>
+
+  <!-- 57 -->
+  <section class="slide" data-notes="The coding agent handles end-to-end development autonomously, in the cloud, powered by GitHub Actions.">
+    <h1>GitHub Copilot Coding Agent</h1>
+    <h2>What is it?</h2>
+    <ul>
+      <li>Autonomous agent that completes entire features</li>
+      <li>Assign a GitHub issue directly to Copilot</li>
+      <li>Works independently in a secure cloud environment</li>
+    </ul>
+    <h2>How it works</h2>
+    <ol>
+      <li><strong>Assign:</strong> hand an issue to Copilot (or ask in chat / CLI)</li>
+      <li><strong>Analyze:</strong> reviews requirements &amp; codebase</li>
+      <li><strong>Implement:</strong> spins up a cloud env (GitHub Actions), writes code, runs tests</li>
+      <li><strong>Draft PR:</strong> opens a pull request and tags you for review</li>
+    </ol>
+  </section>
+
+  <!-- 58 -->
+  <section class="slide section">
+    <h1>GitHub Copilot CLI</h1>
+    <h2>A powerful AI agent — right in your terminal</h2>
+  </section>
+
+  <!-- 59 -->
+  <section class="slide bg-contain" style="background-image:url('img/copilotcli.png')" data-notes="The standalone Copilot CLI brings the agent to your terminal."></section>
+
+  <!-- 60 -->
+  <section class="slide" data-notes="The CLI is now a standalone agent (npm install -g @github/copilot), separate from the older gh copilot extension. Run 'copilot' to start an interactive session.">
+    <h1>Copilot CLI: AI in Your Terminal</h1>
+    <h2>What is it?</h2>
+    <ul>
+      <li>A standalone, agentic CLI — not just command suggestions</li>
+      <li>Writes &amp; debugs code, runs commands, and works with GitHub.com</li>
+      <li>Works on macOS, Linux, and Windows (PowerShell / WSL)</li>
+    </ul>
+    <h2>Install &amp; start</h2>
+    <pre><code># Install the standalone CLI
+npm install -g @github/copilot
+
+# Start an interactive session
+copilot</code></pre>
+  </section>
+
+  <!-- 61 -->
+  <section class="slide" data-notes="Interactive: type 'copilot' and chat. Plan mode via Shift+Tab. Programmatic with -p. Cloud sandbox with --cloud. Pick models with /model, MCP with /mcp.">
+    <h1>Copilot CLI: Two Ways to Use It</h1>
+    <h2>Interactive</h2>
+    <pre><code>copilot
+# Chat, iterate, and steer. Press Shift+Tab for Plan mode.
+# Slash commands: /model  /mcp  /context  /compact</code></pre>
+    <h2>Programmatic (headless)</h2>
+    <pre><code>copilot -p "Show this week's commits and summarize them" \
+  --allow-tool='shell(git)'
+
+# Run in an isolated cloud sandbox
+copilot --cloud</code></pre>
+  </section>
+
+  <!-- 62 -->
+  <section class="slide" data-notes="The CLI is the same agent you know from the IDE, available headless for scripting and automation.">
+    <h1>Copilot CLI: Example Tasks</h1>
+    <pre><code># Local code changes
+"Change the background-color of H1 headings to dark blue"
+
+# Work an assigned issue end-to-end
+"I've been assigned issue #1234 — start it in a new branch"
+
+# Make changes and open a PR
+"Add a user-info.js script and open a pull request"
+
+# Git help
+"Revert the last commit, leaving the changes unstaged"</code></pre>
+    <p class="note-source">Auto-compaction keeps long sessions going; <code>/sandbox enable</code> restricts local access.</p>
+  </section>
+
+  <!-- 63 -->
+  <section class="slide center" data-notes="Thanks! Scan to connect.">
+    <h1>Thank You! 🙏</h1>
+    <p style="font-size:1.15em;">James Gress · AI Lead @ Accenture</p>
+    <img src="img/00-jamesgressqrcode.png" alt="Connect with James Gress QR code" style="width:220px;height:220px;border-radius:14px;margin-top:0.5em;" />
+    <p class="note-source">jmgress.github.io/githubcopilot</p>
+  </section>
+
+</div>
+</div>
+
+<div class="chrome">
+  <span class="footer">James Gress · AI Lead @ Accenture · <a href="https://jmgress.github.io/githubcopilot/">jmgress.github.io/githubcopilot</a></span>
+  <div class="controls">
+    <button id="prevBtn" class="navbtn" type="button" aria-label="Previous slide" title="Previous (←)">‹</button>
+    <span id="counter">1 / 1</span>
+    <button id="nextBtn" class="navbtn" type="button" aria-label="Next slide" title="Next (→)">›</button>
+    <button id="fsBtn" class="navbtn" type="button" aria-label="Toggle fullscreen" title="Fullscreen (F)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+    </button>
+  </div>
+</div>
+
+<div id="notes"><h4>Speaker notes</h4><div id="notes-body"></div></div>
+
+<div id="help">
+  <div class="panel">
+    <h2 style="color:#fff">Keyboard Shortcuts</h2>
+    <table>
+      <tbody>
+        <tr><td><span class="kbd">→</span> <span class="kbd">Space</span> <span class="kbd">PgDn</span></td><td>Next slide</td></tr>
+        <tr><td><span class="kbd">←</span> <span class="kbd">PgUp</span></td><td>Previous slide</td></tr>
+        <tr><td><span class="kbd">Home</span> / <span class="kbd">End</span></td><td>First / last slide</td></tr>
+        <tr><td><span class="kbd">S</span></td><td>Toggle speaker notes</td></tr>
+        <tr><td><span class="kbd">F</span></td><td>Toggle fullscreen</td></tr>
+        <tr><td><span class="kbd">?</span></td><td>Toggle this help</td></tr>
+      </tbody>
+    </table>
+    <p style="color:#8b949e">Press any key to close.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  var total = slides.length;
+  var stage = document.getElementById("stage");
+  var counter = document.getElementById("counter");
+  var progress = document.getElementById("progress");
+  var notes = document.getElementById("notes");
+  var notesBody = document.getElementById("notes-body");
+  var help = document.getElementById("help");
+  var prevBtn = document.getElementById("prevBtn");
+  var nextBtn = document.getElementById("nextBtn");
+  var fsBtn = document.getElementById("fsBtn");
+  var hdrTitle = document.getElementById("hdr-title");
+  var current = 0;
+
+  // Scale the fixed 16:9 stage to fit the viewport (letterboxed).
+  function fit() {
+    var s = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+    stage.style.setProperty("--scale", s);
+  }
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen && document.exitFullscreen();
+    }
+  }
+
+  function clampFromHash() {
+    var h = parseInt(location.hash.replace("#", ""), 10);
+    if (!isNaN(h) && h >= 1 && h <= total) { current = h - 1; }
+  }
+
+  function render() {
+    slides.forEach(function (s, i) { s.classList.toggle("active", i === current); });
+    counter.textContent = (current + 1) + " / " + total;
+    progress.style.width = (total > 1 ? (current / (total - 1)) * 100 : 100) + "%";
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    var slide = slides[current];
+    var t = slide.getAttribute("data-title");
+    if (!t) {
+      var h = slide.querySelector("h1, h2");
+      t = h ? h.textContent.trim() : "";
+    }
+    hdrTitle.textContent = t;
+    if (notes.classList.contains("show")) { updateNotes(); }
+    var newHash = "#" + (current + 1);
+    if (location.hash !== newHash) { history.replaceState(null, "", newHash); }
+  }
+
+  function updateNotes() {
+    var n = slides[current].getAttribute("data-notes") || "";
+    notesBody.textContent = n.trim() ? n : "(no notes for this slide)";
+  }
+
+  function go(n) {
+    current = Math.max(0, Math.min(total - 1, n));
+    render();
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (help.classList.contains("show")) {
+      help.classList.remove("show");
+      if (e.key === "?") { e.preventDefault(); }
+      return;
+    }
+    switch (e.key) {
+      case "ArrowRight": case " ": case "PageDown":
+        e.preventDefault(); go(current + 1); break;
+      case "ArrowLeft": case "PageUp":
+        e.preventDefault(); go(current - 1); break;
+      case "Home": e.preventDefault(); go(0); break;
+      case "End": e.preventDefault(); go(total - 1); break;
+      case "s": case "S":
+        notes.classList.toggle("show"); updateNotes(); break;
+      case "f": case "F":
+        toggleFullscreen();
+        break;
+      case "?":
+        e.preventDefault(); help.classList.add("show"); break;
+    }
+  });
+
+  // Click navigation (right half = next, left half = prev)
+  document.getElementById("deck").addEventListener("click", function (e) {
+    if (e.target.closest && e.target.closest("a")) { return; }
+    if (e.clientX > window.innerWidth / 2) { go(current + 1); } else { go(current - 1); }
+  });
+
+  // On-screen control buttons
+  prevBtn.addEventListener("click", function () { go(current - 1); });
+  nextBtn.addEventListener("click", function () { go(current + 1); });
+  fsBtn.addEventListener("click", toggleFullscreen);
+
+  // Keep the 16:9 stage fitted to the viewport
+  window.addEventListener("resize", fit);
+
+  // Touch swipe
+  var touchX = null;
+  document.addEventListener("touchstart", function (e) { touchX = e.changedTouches[0].clientX; }, { passive: true });
+  document.addEventListener("touchend", function (e) {
+    if (touchX === null) { return; }
+    var dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) { go(current + (dx < 0 ? 1 : -1)); }
+    touchX = null;
+  }, { passive: true });
+
+  window.addEventListener("hashchange", function () { clampFromHash(); render(); });
+
+  clampFromHash();
+  fit();
+  render();
+})();
+</script>
+</body>
+</html>
