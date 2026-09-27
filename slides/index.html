@@ -676,7 +676,7 @@
       <li><strong>Sign In:</strong> Command Palette → <code>GitHub Copilot: Sign In</code></li>
       <li><strong>Start Coding:</strong> open any file and begin typing</li>
     </ol>
-    <p class="note-source">A free Copilot tier is available to all GitHub accounts; paid plans add more usage and models.</p>
+    <p class="note-source">Copilot is available on multiple GitHub plan tiers, and specific free/trial limits vary by account, org, and region.</p>
   </section>
 
   <!-- 15 -->
@@ -883,7 +883,7 @@
   </section>
 
   <!-- 28 -->
-  <section class="slide" data-notes="Plan mode is available in the VS Code Chat mode dropdown and in Copilot CLI (Shift+Tab).">
+  <section class="slide" data-notes="Plan mode is typically available from the Chat mode selector in VS Code and in some CLI flows. Exact placement and shortcuts can vary by product version, so it is better to describe the concept than depend on a fixed keybinding.">
     <h1>Plan Mode Workflow</h1>
     <ol>
       <li><strong>Define Scope:</strong> describe requirements in detail</li>
@@ -1247,14 +1247,14 @@ Always provide specific suggestions with examples.</code></pre>
   </section>
 
   <!-- 54 -->
-  <section class="slide" data-notes="Proper setup ensures secure and reliable external service integration. VS Code supports one-click MCP install and .vscode/mcp.json.">
+  <section class="slide" data-notes="Proper setup ensures secure and reliable external service integration. VS Code and the Copilot tooling change over time, so the pattern matters more than the exact installation path.">
     <h1>Setting Up MCP Servers</h1>
     <ol>
-      <li>Add the server in <code>.vscode/mcp.json</code> or via the MCP: Add Server command</li>
+      <li>Add the server config in <code>.vscode/mcp.json</code> or through the MCP tooling UI in your editor</li>
       <li>Configure authentication (OAuth or API keys/tokens)</li>
       <li>Enable it for Agent mode and start invoking its tools</li>
     </ol>
-    <p class="note-source">VS Code supports one-click installs from the MCP gallery for many popular servers.</p>
+    <p class="note-source">Tooling and one-click installs vary by editor version and extension capabilities.</p>
   </section>
 
   <!-- 55 -->
@@ -1284,6 +1284,145 @@ List my current sprint tasks with status "To Do"</code></pre>
   </section>
 
   <!-- 57 -->
+  <section class="slide section">
+    <h1>Agent Customizations</h1>
+    <h2>Tailoring Copilot to your workflow</h2>
+  </section>
+
+  <!-- 58 -->
+  <section class="slide" data-notes="Agent customizations let you control how Copilot behaves, what it can access, and how specialized it becomes for your team. Think of this as the control panel for the assistant.">
+    <h1>Agent Customizations: Overview</h1>
+    <p>These settings help you shape Copilot from a general assistant into a tool that fits your work style, team practices, and project context.</p>
+    <div class="columns">
+      <div class="card info">
+        <div class="card-title">What they control</div>
+        <ul>
+          <li>Which capabilities the agent can use</li>
+          <li>What context and instructions it sees</li>
+          <li>How specialized it behaves for specific tasks</li>
+          <li>Which external systems it can connect to</li>
+        </ul>
+      </div>
+      <div class="card good">
+        <div class="card-title">Why they matter</div>
+        <ul>
+          <li>More consistent responses</li>
+          <li>Better domain-specific behavior</li>
+          <li>Safer and more controlled automation</li>
+          <li>Fewer repeated instructions in every prompt</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 59 -->
+  <section class="slide" data-notes="Plugins are extensions or capabilities that add new actions or integrations to the agent. They increase the surface area of what Copilot can do without changing the core model.">
+    <h1>Plugins</h1>
+    <p><strong>Plugins expand Copilot's capabilities</strong> by adding new tools, integrations, or features that the agent can use during a task.</p>
+    <ul>
+      <li>Extend the assistant beyond core IDE behavior</li>
+      <li>Add domain-specific tools or integrations</li>
+      <li>Improve workflows for design, docs, tickets, APIs, or testing</li>
+    </ul>
+    <p class="accent"><strong>Think of them as add-ons:</strong> more power, but only when relevant.</p>
+  </section>
+
+  <!-- 60 -->
+  <section class="slide" data-notes="MCP servers expose external systems through a consistent protocol so the agent can read and update real tools such as GitHub, Jira, databases, or web services.">
+    <h1>MCP Servers</h1>
+    <p><strong>Model Context Protocol (MCP)</strong> servers let Copilot connect to external systems in a standard, reusable way.</p>
+    <ul>
+      <li>GitHub: repo details, issues, PRs, and actions</li>
+      <li>Jira / Confluence: project and ticket context</li>
+      <li>Databases and APIs: real operational data</li>
+    </ul>
+    <p class="accent"><strong>Benefit:</strong> the agent can work with live tools instead of only reading local code.</p>
+  </section>
+
+  <!-- 61 -->
+  <section class="slide" data-notes="Skills are reusable bundles of behavior and knowledge. They help Copilot apply expertise consistently across tasks without writing the same instructions each time.">
+    <h1>Skills</h1>
+    <p><strong>Skills are reusable capabilities</strong> that teach the agent how to perform a certain kind of work well.</p>
+    <ul>
+      <li>Examples: code review, architecture analysis, test generation, onboarding tasks</li>
+      <li>Help the agent act with a clear specialty or playbook</li>
+      <li>Reduce repetition across prompts and project workflows</li>
+    </ul>
+    <p class="accent"><strong>Goal:</strong> consistent expertise, not random guesswork.</p>
+  </section>
+
+  <!-- 62 -->
+  <section class="slide" data-notes="Instructions are persistent guidelines that shape the assistant's behavior. They are useful for tone, coding style, and team conventions that should apply every time.">
+    <h1>Instructions</h1>
+    <p><strong>Instructions are the long-term guardrails</strong> for Copilot.</p>
+    <ul>
+      <li>Set coding standards and naming conventions</li>
+      <li>Specify how to write tests and handle errors</li>
+      <li>Define preferred project patterns and documentation style</li>
+    </ul>
+    <pre><code>- Use TypeScript for new files
+- Add JSDoc for public APIs
+- Always validate with tests
+- Follow team naming conventions</code></pre>
+    <p class="accent"><strong>Result:</strong> less drift and more predictable output.</p>
+  </section>
+
+  <!-- 63 -->
+  <section class="slide" data-notes="Agents are specialized assistants with goals, context, and tools. They behave like a focused teammate that is optimized for a domain or workflow.">
+    <h1>Agents</h1>
+    <p><strong>Agents are specialized assistant profiles</strong> built for a specific job or team workflow.</p>
+    <ul>
+      <li>Can be designed for code reviews, triage, testing, or operations</li>
+      <li>Have a narrower focus than a general-purpose chat assistant</li>
+      <li>Use selected tools and instructions to stay on task</li>
+    </ul>
+    <p class="accent"><strong>Best use:</strong> repeatable, specialized work rather than open-ended brainstorming.</p>
+  </section>
+
+  <!-- 64 -->
+  <section class="slide" data-notes="Hooks automatically trigger actions when something happens, like before or after a task, file save, or command. They turn Copilot into a workflow participant instead of just a responder.">
+    <h1>Hooks</h1>
+    <p><strong>Hooks trigger automation when events happen</strong> in your workflow.</p>
+    <ul>
+      <li>Run checks before commits or pushes</li>
+      <li>Enforce project actions when files change</li>
+      <li>Connect Copilot to a broader automation pipeline</li>
+    </ul>
+    <p class="accent"><strong>Example:</strong> validate code quality or generate notes immediately after a file is updated.</p>
+  </section>
+
+  <!-- 65 -->
+  <section class="slide" data-notes="Tools are the concrete actions the agent can take: reading files, searching a repo, running commands, writing code, and interacting with the environment.">
+    <h1>Tools</h1>
+    <p><strong>Tools are the actions Copilot is allowed to take.</strong> They define what the agent can read, edit, run, and verify.</p>
+    <ul>
+      <li>Search and read files</li>
+      <li>Modify code and create files</li>
+      <li>Run terminal commands and tests</li>
+      <li>Access workspace or connected services</li>
+    </ul>
+    <p class="accent"><strong>Rule:</strong> the more precise the tool access, the more controlled and reliable the automation.</p>
+  </section>
+
+  <!-- 66 -->
+  <section class="slide" data-notes="This is the summary slide to tie the entire section together and explain why these customizations matter in practice.">
+    <h1>Why These Matter</h1>
+    <div class="card info">
+      <div class="card-title">The Big Idea</div>
+      <ul>
+        <li><strong>Plugins</strong> add new capabilities</li>
+        <li><strong>MCP Servers</strong> connect external systems</li>
+        <li><strong>Skills</strong> package expertise</li>
+        <li><strong>Instructions</strong> define behavior</li>
+        <li><strong>Agents</strong> specialize the assistant</li>
+        <li><strong>Hooks</strong> automate responses to events</li>
+        <li><strong>Tools</strong> grant execution power</li>
+      </ul>
+    </div>
+    <p class="accent"><strong>Takeaway:</strong> Copilot becomes much more useful when you give it the right context, constraints, and tools.</p>
+  </section>
+
+  <!-- 67 -->
   <section class="slide" data-notes="The coding agent handles end-to-end development autonomously, in the cloud, powered by GitHub Actions.">
     <h1>GitHub Copilot Coding Agent</h1>
     <h2>What is it?</h2>
@@ -1301,7 +1440,7 @@ List my current sprint tasks with status "To Do"</code></pre>
     </ol>
   </section>
 
-  <!-- 58 -->
+  <!-- 68 -->
   <section class="slide section">
     <h1>GitHub Copilot CLI</h1>
     <h2>A powerful AI agent — right in your terminal</h2>
@@ -1311,16 +1450,16 @@ List my current sprint tasks with status "To Do"</code></pre>
   <section class="slide bg-contain" style="background-image:url('img/copilotcli.png')" data-notes="The standalone Copilot CLI brings the agent to your terminal."></section>
 
   <!-- 60 -->
-  <section class="slide" data-notes="The CLI is now a standalone agent (npm install -g @github/copilot), separate from the older gh copilot extension. Run 'copilot' to start an interactive session.">
+  <section class="slide" data-notes="The CLI is a terminal-based AI assistant and workflow tool. Installation and exact command names can vary by product version and rollout, so treat the examples as current patterns rather than a fixed contract.">
     <h1>Copilot CLI: AI in Your Terminal</h1>
     <h2>What is it?</h2>
     <ul>
-      <li>A standalone, agentic CLI — not just command suggestions</li>
-      <li>Writes &amp; debugs code, runs commands, and works with GitHub.com</li>
+      <li>A terminal-based AI agent for coding, troubleshooting, and workflow automation</li>
+      <li>Can write and debug code, run commands, and work with GitHub artifacts</li>
       <li>Works on macOS, Linux, and Windows (PowerShell / WSL)</li>
     </ul>
     <h2>Install &amp; start</h2>
-    <pre><code># Install the standalone CLI
+    <pre><code># Install the standalone CLI (example)
 npm install -g @github/copilot
 
 # Start an interactive session
@@ -1328,12 +1467,12 @@ copilot</code></pre>
   </section>
 
   <!-- 61 -->
-  <section class="slide" data-notes="Interactive: type 'copilot' and chat. Plan mode via Shift+Tab. Programmatic with -p. Cloud sandbox with --cloud. Pick models with /model, MCP with /mcp.">
+  <section class="slide" data-notes="Interactive: type 'copilot' and chat. Plan mode availability and shortcuts vary by version, so describe the command flow and model selection rather than binding to a fixed key. Programmatic mode remains consistent across versions with -p. Cloud sandbox and slash commands may vary by rollout.">
     <h1>Copilot CLI: Two Ways to Use It</h1>
     <h2>Interactive</h2>
     <pre><code>copilot
-# Chat, iterate, and steer. Press Shift+Tab for Plan mode.
-# Slash commands: /model  /mcp  /context  /compact</code></pre>
+# Chat, iterate, and steer. Use the mode selector for planning workflows.
+# Common features may include /model, /mcp, /context, and /compact</code></pre>
     <h2>Programmatic (headless)</h2>
     <pre><code>copilot -p "Show this week's commits and summarize them" \
   --allow-tool='shell(git)'
