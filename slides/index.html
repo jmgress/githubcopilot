@@ -815,12 +815,12 @@
   </section>
 
   <!-- 24 -->
-  <section class="slide" data-notes="Demo: Select code, use Cmd+I, show direct edits.">
-    <h1>Edit Mode — Direct Code Changes</h1>
+  <section class="slide" data-notes="Demo: Select code, use Cmd+I, scope the request to a selection, and show a quick in-place edit. For larger or multi-file changes, switch to Agent.">
+    <h1>Inline Chat — Quick In-Place Edits</h1>
     <h2>Access</h2>
     <ul>
-      <li>Select code + <span class="kbd">Cmd/Ctrl + I</span></li>
-      <li>Switch the Chat view mode dropdown to <strong>Edit</strong></li>
+      <li>Select code to scope the request, then press <span class="kbd">Cmd/Ctrl + I</span></li>
+      <li>Use Agent for larger refactors or multi-file changes</li>
     </ul>
     <h2>Examples</h2>
     <ul>
@@ -850,11 +850,11 @@
   </section>
 
   <!-- 26 -->
-  <section class="slide" data-notes="Demo: Agent mode autonomously edits multiple files and runs terminal commands, iterating until the task is done. Pick a model (GPT, Claude, Gemini, Grok) from the model dropdown.">
+  <section class="slide" data-notes="Demo: Agent autonomously edits multiple files and runs terminal commands, iterating until the task is done. Pick a model (GPT, Claude, Gemini, Grok) from the model dropdown. Agent now covers the old Edit-style tasks too.">
     <h1>Agent Mode — Autonomous Multi-File Tasks</h1>
     <h2>Access</h2>
     <ul>
-      <li>Open the Chat view and select <strong>Agent</strong> from the mode dropdown (Ask · Edit · Agent)</li>
+      <li>Open the Chat view and select <strong>Agent</strong> from the Agent dropdown (Ask · Agent · Plan)</li>
     </ul>
     <h2>What it does</h2>
     <ul>
@@ -883,7 +883,7 @@
   </section>
 
   <!-- 28 -->
-  <section class="slide" data-notes="Plan mode is typically available from the Chat mode selector in VS Code and in some CLI flows. Exact placement and shortcuts can vary by product version, so it is better to describe the concept than depend on a fixed keybinding.">
+  <section class="slide" data-notes="Plan mode is typically available from the Chat agent selector in VS Code and in some CLI flows. Exact placement and shortcuts can vary by product version, so it is better to describe the concept than depend on a fixed keybinding.">
     <h1>Plan Mode Workflow</h1>
     <ol>
       <li><strong>Define Scope:</strong> describe requirements in detail</li>
@@ -904,7 +904,7 @@
   <section class="slide" data-notes="Plan mode bridges the gap between planning and execution.">
     <h1>Plan Mode vs Other Modes</h1>
     <table>
-      <thead><tr><th>Aspect</th><th>Plan Mode</th><th>Ask / Edit / Agent</th></tr></thead>
+      <thead><tr><th>Aspect</th><th>Plan Mode</th><th>Ask / Agent</th></tr></thead>
       <tbody>
         <tr><td><strong>Scope</strong></td><td>Strategic planning</td><td>Immediate execution</td></tr>
         <tr><td><strong>Horizon</strong></td><td>Days / weeks</td><td>Minutes / hours</td></tr>
@@ -915,29 +915,28 @@
   </section>
 
   <!-- 30 -->
-  <section class="slide" data-notes="">
+  <section class="slide" data-notes="Built-in roles are Ask, Agent, and Plan. For quick in-place edits, use Inline Chat with Cmd/Ctrl+I; old Edit workflows now roll into Agent.">
     <h1>Copilot Modes: Overview</h1>
     <p>GitHub Copilot offers distinct modes for different scenarios:</p>
     <ol>
       <li><strong>Ask Mode</strong> — questions &amp; explanations</li>
-      <li><strong>Edit Mode</strong> — direct code modifications</li>
-      <li><strong>Agent Mode</strong> — autonomous multi-file operations</li>
+      <li><strong>Agent Mode</strong> — code changes, refactors, and autonomous multi-file work</li>
       <li><strong>Plan Mode</strong> — strategic project planning</li>
     </ol>
-    <p class="accent">Let's explore how they differ and when to use each…</p>
+    <p class="accent">Quick edits use Inline Chat (<span class="kbd">Cmd/Ctrl + I</span>); larger changes go through Agent.</p>
   </section>
 
   <!-- 31 -->
-  <section class="slide" data-notes="">
-    <h1>Ask vs Edit Modes</h1>
+  <section class="slide" data-notes="Use Ask to understand and Agent to make changes. Inline Chat complements Agent for very fast in-place edits.">
+    <h1>Ask vs Agent Modes</h1>
     <table>
-      <thead><tr><th>Feature</th><th>Ask Mode</th><th>Edit Mode</th></tr></thead>
+      <thead><tr><th>Feature</th><th>Ask Mode</th><th>Agent Mode</th></tr></thead>
       <tbody>
-        <tr><td><strong>Purpose</strong></td><td>Info &amp; explanations</td><td>Modify code directly</td></tr>
-        <tr><td><strong>Access</strong></td><td>Chat view (Ask)</td><td>Chat view (Edit) / <span class="kbd">Cmd/Ctrl + I</span></td></tr>
-        <tr><td><strong>Scope</strong></td><td>Questions &amp; learning</td><td>Selected files</td></tr>
-        <tr><td><strong>Output</strong></td><td>Text + examples</td><td>Code changes</td></tr>
-        <tr><td><strong>Best For</strong></td><td>Learning, debugging</td><td>Quick fixes, refactoring</td></tr>
+        <tr><td><strong>Purpose</strong></td><td>Info &amp; explanations</td><td>Make code changes and execute tasks</td></tr>
+        <tr><td><strong>Access</strong></td><td>Chat view (Ask)</td><td>Chat view (Agent) / Agent dropdown</td></tr>
+        <tr><td><strong>Scope</strong></td><td>Questions &amp; learning</td><td>Selection, file, or workspace tasks</td></tr>
+        <tr><td><strong>Output</strong></td><td>Text + examples</td><td>Code changes + tool actions</td></tr>
+        <tr><td><strong>Best For</strong></td><td>Learning, debugging</td><td>Implementation, fixes, refactors</td></tr>
       </tbody>
     </table>
   </section>
@@ -949,7 +948,7 @@
       <thead><tr><th>Feature</th><th>Agent Mode</th><th>Plan Mode</th></tr></thead>
       <tbody>
         <tr><td><strong>Purpose</strong></td><td>Autonomous multi-file work</td><td>Strategic planning</td></tr>
-        <tr><td><strong>Access</strong></td><td>Mode dropdown → Agent</td><td>Mode dropdown → Plan</td></tr>
+        <tr><td><strong>Access</strong></td><td>Agent dropdown → Agent</td><td>Agent dropdown → Plan</td></tr>
         <tr><td><strong>Scope</strong></td><td>Entire project/workspace</td><td>Full project lifecycle</td></tr>
         <tr><td><strong>Output</strong></td><td>Workflows &amp; changes</td><td>Implementation roadmap</td></tr>
         <tr><td><strong>Best For</strong></td><td>Features, refactors</td><td>Large projects, migrations</td></tr>
@@ -958,18 +957,18 @@
   </section>
 
   <!-- 33 -->
-  <section class="slide" data-notes="Demo: Show progression from Ask to Plan mode.">
-    <h1>All Four Modes: Quick Reference</h1>
+  <section class="slide" data-notes="Demo: Show progression from Ask to Agent to Plan, with Inline Chat as the quick-edit companion.">
+    <h1>All Three Modes: Quick Reference</h1>
     <table>
-      <thead><tr><th></th><th>Ask</th><th>Edit</th><th>Agent</th><th>Plan</th></tr></thead>
+      <thead><tr><th></th><th>Ask</th><th>Agent</th><th>Plan</th></tr></thead>
       <tbody>
-        <tr><td><strong>Complexity</strong></td><td>Low</td><td>Low–Med</td><td>Med–High</td><td>High</td></tr>
-        <tr><td><strong>Speed</strong></td><td>Instant</td><td>Fast</td><td>Moderate</td><td>Planning</td></tr>
-        <tr><td><strong>Interaction</strong></td><td>Conversational</td><td>Direct</td><td>Autonomous</td><td>Strategic</td></tr>
-        <tr><td><strong>Learning Curve</strong></td><td>Easy</td><td>Easy</td><td>Moderate</td><td>Advanced</td></tr>
+        <tr><td><strong>Complexity</strong></td><td>Low</td><td>Med–High</td><td>High</td></tr>
+        <tr><td><strong>Speed</strong></td><td>Instant</td><td>Moderate</td><td>Planning</td></tr>
+        <tr><td><strong>Interaction</strong></td><td>Conversational</td><td>Autonomous</td><td>Strategic</td></tr>
+        <tr><td><strong>Learning Curve</strong></td><td>Easy</td><td>Moderate</td><td>Advanced</td></tr>
       </tbody>
     </table>
-    <p class="accent"><strong>Pro Tip:</strong> Ask to understand → Edit for changes → Agent for multi-file work → Plan for big initiatives.</p>
+    <p class="accent"><strong>Pro Tip:</strong> Ask to understand → Agent to build &amp; refactor → Plan for big initiatives.</p>
   </section>
 
   <!-- 34 -->
@@ -1094,9 +1093,9 @@ applyTo: "src/**/*.ts"
   </section>
 
   <!-- 42 -->
-  <section class="slide" data-notes="Demo: Create a custom chat mode and pick it from the mode dropdown.">
-    <h1>Custom Chat Modes</h1>
-    <p><strong>Create:</strong> <code>.github/chatmodes/&lt;name&gt;.chatmode.md</code></p>
+  <section class="slide" data-notes="Demo: Create a custom agent and pick it from the Agent dropdown. These were formerly called custom chat modes.">
+    <h1>Custom Agents</h1>
+    <p><strong>Create:</strong> <code>.github/agents/&lt;name&gt;.agent.md</code></p>
     <pre><code>---
 description: Expert code reviewer
 tools: ['codebase', 'search']
@@ -1106,7 +1105,7 @@ You are an expert code reviewer. Focus on:
 - Performance optimizations
 - Maintainability &amp; best practices
 Always provide specific suggestions with examples.</code></pre>
-    <p class="accent"><strong>Usage:</strong> select your mode from the Chat view <strong>mode dropdown</strong></p>
+    <p class="accent"><strong>Usage:</strong> select your agent from the Chat view <strong>Agent dropdown</strong></p>
   </section>
 
   <!-- 43 -->
@@ -1170,7 +1169,7 @@ Always provide specific suggestions with examples.</code></pre>
 │   ├── copilot-instructions.md
 │   ├── instructions/
 │   ├── prompts/
-│   └── chatmodes/
+│   └── agents/
 └── other-files...</code></pre>
   </section>
 
@@ -1471,7 +1470,7 @@ copilot</code></pre>
     <h1>Copilot CLI: Two Ways to Use It</h1>
     <h2>Interactive</h2>
     <pre><code>copilot
-# Chat, iterate, and steer. Use the mode selector for planning workflows.
+# Chat, iterate, and steer. Use the agent selector for planning workflows.
 # Common features may include /model, /mcp, /context, and /compact</code></pre>
     <h2>Programmatic (headless)</h2>
     <pre><code>copilot -p "Show this week's commits and summarize them" \
