@@ -1,67 +1,131 @@
-# Marp Slides Template
+# GitHub Copilot Presentation
 
-[Use this template!](https://github.com/codebytes/marp-slides-template/generate)
+A comprehensive presentation deck about using GitHub Copilot to supercharge coding in VS Code. This presentation was created using GitHub Copilot itself, demonstrating the tool's capabilities in action.
 
-Create a Marp presentation site that can be built and published on [GitHub Pages] using this minimal template. The site features:
+The deck is a self-contained HTML file ([slides/index.html](slides/index.html)) with no external/CDN dependencies — all styles and the slide engine live inline, and images are local PNGs in `slides/img/`, so it runs offline in any browser.
 
-- Marp integration
-- A GitHub Pages / Actions workflow for build and publish ([See a preview](http://chris-ayers.com/marp-slides-template/))
-- A DevContainer/CodeSpace configuration with Marp and Markdown preview extensions
-- Chrome installation for PDF and PowerPoint slide creation on Linux
+**Presented by:** James Gress, AI Director @ Accenture  
+**GitHub Pages:** [https://jmgress.github.io/githubcopilot/](https://jmgress.github.io/githubcopilot/)
 
-## Customization
+## 🎯 Presentation Overview
 
-Feel free to customize the sites created with this template as you like!
+This slide deck covers:
 
-## Getting Started
+- **AI-Generated Code Trends** - CEO insights and industry statistics (2025)
+- **Copilot Fundamentals** - Strengths, weaknesses, and best practices
+- **Prompt Engineering** - Creating effective prompts for better results
+- **Working Modes** - Ask, Edit, Agent, and Plan modes explained
+- **Advanced Features** - MCP servers, custom instructions, and prompt files
+- **GitHub Copilot CLI** - AI assistance in your terminal
+- **Coding Agent** - Autonomous development workflows
+- **Privacy & Security** - Understanding Copilot code context and data handling
 
-1. Click "[use this template]" to create a new site.
-2. Update the content of `slides/Slides.md` with your own presentation.
+## 🚀 Key Topics Covered
 
-## Custom Themes
+### Core Concepts
+- Ghost text and code completion
+- Context management (avoiding context creep and confusion)
+- Keyboard shortcuts and productivity tips
+- Chat history navigation
 
-This template includes four custom themes in the `slides/themes` folder:
+### Advanced Features
+- Model Context Protocol (MCP) servers for GitHub and Jira integration
+- Custom chat modes and prompt files
+- AI-readable documentation with Mermaid diagrams
+- Copilot instructions file (`.github/copilot-instructions.md`)
+- Sparkles and AI indicators
 
-- custom
-- custom-default (based on the built-in default theme)
-- custom-gaia (based on the built-in gaia theme)
-- custom-uncover (based on the built-in uncover theme)
+### Development Workflows
+- Ask vs Edit vs Agent vs Plan modes comparison
+- Multi-file task management with `@workspace`
+- Strategic development planning with Plan Mode
+- GitHub Copilot Coding Agent for autonomous development
 
-To use a custom theme, edit the relevant css file and add its reference in the front matter of `Slides.md`. For example, to use `custom-default` add the following to the `Slides.md` front matter:
+## 📁 Project Structure
 
-```markdown
----
-marp: true
-theme: custom-default
----
+```
+githubcopilot/
+├── slides/
+│   ├── index.html         # The presentation (inline CSS + slide engine)
+│   └── img/               # PNG images referenced by index.html
+├── .github/
+│   └── workflows/         # GitHub Actions for deployment
+├── .devcontainer/         # Dev container configuration
+└── README.md
 ```
 
-For additional themes, add them to the devcontainer and follow the [Marp custom theme documentation](https://marpit.marp.app/theme-css).
+## 🎨 Getting Started
 
-## Publishing on GitHub Pages
+### View the Presentation
 
-1. In your GitHub repo, navigate to `Settings` > `Pages` > `Build and deployment`.
-2. Select `Source`: `GitHub Actions`.
-3. If any Actions failed, go to the `Actions` tab and click on `Re-run jobs`.
+Visit the live presentation: [https://jmgress.github.io/githubcopilot/](https://jmgress.github.io/githubcopilot/)
 
-## Local Build and Preview
+### Local Development
 
-1. Install [Visual Studio Code](https://code.visualstudio.com/).
-2. Install the [Marp for VS Code extension](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode).
-3. Open `slides/Slides.md` in VS Code.
+1. Open `slides/index.html` directly in any web browser (double-click it, or use a local server / VS Code Live Preview).
+2. Edit the markup, styles, or slide engine in `slides/index.html` — everything lives in that one file.
+3. Refresh the browser to see changes.
 
-## Licensing and Attribution
+### Navigating the Deck
 
-This repository is licensed under the [MIT License]. Reuse or extend the code as you wish, but include the original license. The deployment GitHub Actions workflow is based on GitHub's starter workflows.
+| Key | Action |
+|-----|--------|
+| `→` / `Space` / `PgDn` | Next slide |
+| `←` / `PgUp` | Previous slide |
+| `Home` / `End` | First / last slide |
+| `S` | Toggle speaker notes |
+| `F` | Toggle fullscreen |
+| `?` | Show keyboard help |
 
-## Resources
+The deck also supports click-to-advance, touch swipe, and deep-linking to a slide via the URL hash (e.g. `index.html#12`).
 
-- [Use this template](https://github.com/codebytes/marp-slides-template/generate)
+### Export to PDF
 
-- GitHub Pages: [https://docs.github.com/en/pages](https://docs.github.com/en/pages)
+Open the deck in a Chromium-based browser and use **Print → Save as PDF** (landscape). The print stylesheet renders one slide per page.
 
-- CommonMark markdown syntax: [https://commonmark.org/help/](https://commonmark.org/help/)
+### Updating Images
 
-- Marp Official Repository: [https://github.com/marp-team/marp](https://github.com/marp-team/marp)
-- Marp Official Documentation: [https://marpit.marp.app/markdown](https://marpit.marp.app/markdown)
-- Marp for VS Code Documentation: [https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode)
+Images live in `slides/img/` as PNG files and are referenced from `index.html` by relative path (e.g. `img/name.png`). To change an image, replace the PNG in that folder (or add a new one and update the matching `src` / `background-image`). Keep `index.html` and the `img/` folder together when deploying or sharing.
+
+## 🚢 Publishing on GitHub Pages
+
+This repository is configured to automatically publish to GitHub Pages:
+
+1. Push changes to the `main` branch
+2. GitHub Actions copies `slides/index.html` to the site root
+3. The site is published to `https://jmgress.github.io/githubcopilot/`
+
+To set up for your own repository:
+1. Navigate to `Settings` > `Pages` > `Build and deployment`
+2. Select `Source`: `GitHub Actions`
+3. The workflow will run automatically on push
+
+## 📚 Resources
+
+### GitHub Copilot
+- [GitHub Copilot Documentation](https://docs.github.com/en/copilot)
+- [GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli)
+- [Model Context Protocol (MCP)](https://modelcontextprotocol.io/)
+
+### Web & Deployment
+- [GitHub Pages Documentation](https://docs.github.com/en/pages)
+- [Printing to PDF from the browser](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/print)
+
+## 📄 License
+
+This repository is licensed under the [MIT License](LICENSE). Feel free to reuse or extend the code as you wish, but include the original license.
+
+## 👤 About the Author
+
+**James Gress**  
+AI Director @ Accenture  
+Advanced Technology Center AI Lead
+
+- LinkedIn: [jamesgress](https://linkedin.com/in/jamesgress/)
+- GitHub: [jmgress](https://github.com/jmgress)
+- X.com: [@jmgress](https://x.com/jmgress)
+- Meetup: [Tampa Bay Generative AI Meetup](https://www.meetup.com/tampa-bay-generative-ai-meetup/)
+
+---
+
+**Note:** This entire slide deck was created using GitHub Copilot, demonstrating its capabilities in content creation and documentation.

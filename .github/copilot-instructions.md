@@ -1,15 +1,11 @@
-- All slides must be written in Markdown format and use the [Marp](https://marp.app/) framework.
-- frontmatter Each slide deck must include the following frontmatter:
-   ```yaml
-   ---
-   marp: true
-   theme: custom-default
-   ---
-   ```
-- speaker notes - Use HTML comments (`<!-- -->`) for speaker notes.
-- Mermaid diagrams - Include the necessary `<script>` tag for Mermaid.js when diagrams are used.
-- Slide decks should be stored in the `slides` directory.
-- Custom themes or assets should be stored in appropriate subdirectories under `slides`.
-- Follow Marp best practices for layout and styling.
-- Ensure compatibility with Marp CLI for PDF and presentation generation.
-- When asking for a slide, the content should fit within a the slide when displayed.
+- The presentation is an HTML file at `slides/index.html` with images stored as PNG files in `slides/img/`.
+- Do not reintroduce Marp, Markdown slide sources, or external theme/CSS files.
+- Keep the deck dependency-free: all CSS and the slide engine JavaScript stay inline within `slides/index.html`, and there are no CDN or external script/style links.
+- Each slide is a `<section class="slide">` element inside `#deck`. Add new slides as additional `<section>` elements in document order.
+- Speaker notes go in the `data-notes` attribute of a slide's `<section>` (toggled with the `S` key), not in HTML comments.
+- Store images as PNG files in `slides/img/` and reference them by relative path (e.g. `img/name.png`); do not embed images as base64 data URIs.
+- For diagrams, use inline HTML/CSS or inline SVG; do not add external scripts or CDN links.
+- Preserve the keyboard/click/touch navigation engine and the slide counter, footer, and progress bar.
+- Slide content should fit within a single screen when displayed; prefer concise bullets, two-column `.columns` layouts, and the existing card/table/code styles.
+- When changing `slides/index.html`, commit messages should describe the change in presentation content, not the technical HTML changes.
+
