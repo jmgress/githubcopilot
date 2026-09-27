@@ -18,7 +18,7 @@ This slide deck covers:
 - **Advanced Features** - MCP servers, custom instructions, and prompt files
 - **GitHub Copilot CLI** - AI assistance in your terminal
 - **Coding Agent** - Autonomous development workflows
-- **Privacy & Security** - Understanding Blackbird indexing and data handling
+- **Privacy & Security** - Understanding Copilot code context and data handling
 
 ## 🚀 Key Topics Covered
 
