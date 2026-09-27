@@ -1097,8 +1097,10 @@ applyTo: "src/**/*.ts"
     <h1>Custom Agents</h1>
     <p><strong>Create:</strong> <code>.github/agents/&lt;name&gt;.agent.md</code></p>
     <pre><code>---
+name: review-bot
 description: Expert code reviewer
-tools: ['codebase', 'search']
+target: vscode
+tools: [read, search]
 ---
 You are an expert code reviewer. Focus on:
 - Security vulnerabilities
